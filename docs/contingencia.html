@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Contingência — Encontro de Líderes 2026</title>
+<link rel="stylesheet" href="css/estilo.css">
+<style>
+  body.projecao { overflow: auto; }
+  .cont-barra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 3vw; background: #fff; border-top: 2px solid var(--tinta); font-size: 16px; position: sticky; bottom: 0; }
+  .cont-barra .botao { min-height: 44px; padding: 6px 14px; }
+  .tela.cont { height: auto; min-height: calc(100vh - 62px); }
+  .manual { font-size: 17px; }
+  .manual input[type=number] { width: 5.2em; min-height: 44px; padding: 6px 8px; text-align: right; }
+  .manual input[type=text] { min-height: 44px; padding: 6px 10px; }
+  @media print { .cont-barra { display: none; } }
+</style>
+</head>
+<body class="projecao">
+<noscript><p style="padding:16px">Esta página precisa de JavaScript ativado.</p></noscript>
+<div id="app"></div>
+<script src="config.js"></script>
+<script src="js/comum.js"></script>
+<script src="js/contingencia-dados.js"></script>
+<script src="js/contingencia.js"></script>
+</body>
+</html>
