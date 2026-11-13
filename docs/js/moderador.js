@@ -78,7 +78,7 @@
       e.rodada ? h('p', { role: 'status' }, h('strong', { text: e.respostasRecebidas + ' de ' + e.totalEquipes }), ' respostas recebidas nesta rodada.') : null,
       e.equipes.length ? h('ul', { class: 'lista-equipes' }, e.placar.map(function (l) {
         var env = envios && envios[l.id];
-        return h('li', null, h('span', { text: l.nome }), h('span', null, env ? h('span', { class: 'selo ' + (env.enviou ? 'certo' : 'neutro'), text: env.enviou ? '✓ enviou' : 'aguardando' }) : null, ' ', h('span', { class: 'relogio', title: 'Pontos acumulados (visão privada)', text: l.total + ' pts' })));
+        return h('li', null, h('span', null, l.nome, env && env.resposta && env.resposta.dobro ? h('span', { class: 'apoio', title: 'Usou a Carta Dobro', text: ' ×2' }) : null, env && env.ajuda ? h('span', { class: 'apoio', title: 'Usou a Ajuda 50:50', text: ' 50:50' }) : null), h('span', null, env ? h('span', { class: 'selo ' + (env.enviou ? 'certo' : 'neutro'), text: env.enviou ? '✓ enviou' : 'aguardando' }) : null, ' ', h('span', { class: 'relogio', title: 'Pontos acumulados (visão privada)', text: l.total + ' pts' })));
       })) : h('p', { class: 'apoio', text: 'Nenhuma equipe entrou ainda.' }));
   }
 
@@ -86,7 +86,7 @@
     var passos = [['abertura', 'Painel', e.painelDuracaoMin]].concat(e.rodadas.map(function (r) { return [r.id, r.titulo, r.duracaoMin]; }), [['placar', 'Placar e fechamento', e.fechamentoPrevio.duracaoMin]]);
     var atual = e.etapa.id === 'fechamento' ? 'placar' : e.etapa.id;
     var indice = passos.findIndex(function (p) { return p[0] === atual; });
-    return h('section', { class: 'cartao' }, h('h2', { text: 'Roteiro (40 min)' }), h('ol', { class: 'roteiro' }, passos.map(function (p, k) {
+    return h('section', { class: 'cartao' }, h('h2', { text: 'Roteiro (' + passos.reduce(function (a, p) { return a + p[2]; }, 0) + ' min)' }), h('ol', { class: 'roteiro' }, passos.map(function (p, k) {
       return h('li', { 'aria-current': k === indice ? 'step' : null, class: k < indice ? 'feito' : null }, h('span', { text: (k + 1) + '. ' + p[1] }), h('span', { text: p[2] + ' min' }));
     })));
   }
@@ -96,7 +96,7 @@
     var corpo;
     if (r.tipo === 'associacao') corpo = h('ol', null, r.itens.map(function (it, k) { return h('li', null, it.enunciado + ' — ', h('strong', { text: nomeInst(g.itens[k].gabarito) }), h('span', { class: 'apoio', text: ' (' + g.itens[k].acertos + ' de ' + g.itens[k].total + ' acertaram)' })); }));
     else if (r.tipo === 'ordenacao') corpo = h('ol', null, g.itens.map(function (it) { return h('li', null, h('strong', { text: it.ano + ' · ' }), it.texto, h('span', { class: 'apoio', text: ' (' + it.acertos + ' de ' + it.total + ' na posição certa)' })); }));
-    else if (r.tipo === 'decisao') corpo = h('ul', null, r.opcoes.map(function (o, k) { return h('li', null, h('strong', { text: o.id.toUpperCase() + ' = ' + g.opcoes[k].pontos + ' pts. ' }), g.opcoes[k].analise, h('span', { class: 'apoio', text: ' (' + g.opcoes[k].escolhas + ' equipes)' })); }));
+    else if (r.tipo === 'decisao') corpo = h('ul', null, r.opcoes.map(function (o, k) { return h('li', null, h('strong', { text: o.id.toUpperCase() + ' = ' + g.opcoes[k].pontos + ' pts. ' }), g.opcoes[k].analise, h('span', { class: 'apoio', text: ' (' + g.opcoes[k].escolhas + (g.opcoes[k].escolhas === 1 ? ' equipe)' : ' equipes)') })); }));
     else corpo = h('ol', null, r.questoes.map(function (q, k) { return h('li', null, q.enunciado + ' — ', h('strong', { text: g.questoes[k].correta.toUpperCase() }), h('span', { class: 'apoio', text: ' (' + g.questoes[k].acertos + ' de ' + g.questoes[k].total + ' acertaram)' })); }));
     return h('div', { class: 'privado' }, h('strong', { text: 'Gabarito — só nesta tela' }), corpo);
   }
@@ -111,8 +111,10 @@
   }
 
   function enunciadoResumo(r) {
-    if (r.tipo === 'decisao') return [h('p', { text: r.caso }), h('p', { class: 'regra', text: r.criterio }), h('ol', { type: 'A' }, r.opcoes.map(function (o) { return h('li', { text: o.texto }); }))];
-    return null;
+    if (r.tipo === 'decisao') return [h('p', { class: 'apoio', text: 'Caso sorteado: ' + r.tema }), h('p', { text: r.caso }), h('p', { class: 'regra', text: r.criterio }), h('ol', { type: 'A' }, r.opcoes.map(function (o) { return h('li', { text: o.texto }); }))];
+    if (r.tipo === 'associacao') return [h('p', { class: 'apoio', text: 'Enunciados sorteados para esta sala:' }), h('ol', null, r.itens.map(function (i) { return h('li', { text: i.enunciado }); }))];
+    if (r.tipo === 'quiz') return [h('p', { class: 'apoio', text: 'Questões sorteadas para esta sala:' }), h('ol', null, r.questoes.map(function (q) { return h('li', { text: q.enunciado }); }))];
+    return [h('p', { class: 'apoio', text: 'Acontecimentos sorteados para esta sala (a ordem correta fica no gabarito, depois de abrir):' }), h('ul', null, r.itens.map(function (i) { return h('li', { text: i.texto }); }))];
   }
 
   function blocoEtapa(e) {
@@ -121,7 +123,7 @@
     var erro = h('div', { role: 'alert' }); if (erroAcao) erro.appendChild(h('p', { class: 'aviso erro', text: erroAcao }));
     var iProx = ['abertura', 'r1', 'r2', 'r3'].indexOf(id);
     var proxima = iProx >= 0 ? e.rodadas[iProx] : null;
-    var rotuloAvancar = proxima ? 'Ir para: ' + proxima.titulo : id === 'r4' ? 'Mostrar placar final' : 'Ir para o fechamento';
+    var rotuloAvancar = proxima ? 'Ir para: ' + proxima.titulo : id === 'r4' ? 'Ir para o placar final' : 'Ir para o fechamento';
 
     if (id === 'abertura') {
       var s = e.slides[e.slide];
@@ -152,16 +154,43 @@
           h('div', { class: 'linha-botoes' },
             n > 1 ? h('button', { class: 'botao secundario', type: 'button', disabled: e.item === 0, text: '← Item anterior', onclick: function () { acao('item', { indice: e.item - 1 }); } }) : null,
             n > 1 && e.item < n - 1 ? h('button', { class: 'botao', type: 'button', text: 'Próximo item →', onclick: function () { acao('item', { indice: e.item + 1 }); } }) : botao(rotuloAvancar + ' →', 'avancar')),
+          h('div', { class: 'linha-botoes', style: 'margin-top:10px' }, e.parcialNaTela
+            ? h('button', { class: 'botao secundario', type: 'button', text: 'Voltar à devolutiva na projeção', onclick: function () { acao('parcial', { mostrar: false }); } })
+            : h('button', { class: 'botao secundario', type: 'button', text: 'Mostrar placar parcial na projeção', onclick: function () { acao('parcial', { mostrar: true }); } })),
+          e.parcialNaTela ? h('p', { class: 'aviso ok', role: 'status', text: 'O placar parcial está na projeção e nos celulares.' }) : null,
           n > 1 && e.item < n - 1 ? h('p', null, h('button', { class: 'botao discreto', type: 'button', text: rotuloAvancar + ' sem passar pelos demais itens', onclick: function () { acao('avancar'); } })) : null,
           justificativas(e), gabarito(e));
       }
     } else {
+      var dz = e.desempate, aberto = dz && dz.fase === 'aberta';
       nos.push(h('h1', { text: id === 'placar' ? 'Placar final' : 'Fechamento' }),
         h('div', { class: 'notas' }, h('strong', { text: 'Notas de fala (privadas)' }), e.fechamentoPrevio.notasModerador),
-        id === 'fechamento' ? h('p', { class: 'pergunta-final', style: 'font-size:1.4rem', text: e.fechamentoPrevio.pergunta }) : null,
-        h('table', { class: 'placar' }, h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Pos.' }), h('th', { scope: 'col', text: 'Equipe' }), e.rodadas.map(function (x, k) { return h('th', { scope: 'col', class: 'n', title: x.titulo, text: 'R' + (k + 1) }); }), h('th', { scope: 'col', class: 'n', text: 'Total' }))),
-          h('tbody', null, e.placar.map(function (l) { return h('tr', null, h('td', { class: 'pos', text: EL.posicao(l.posicao) }), h('td', { text: l.nome }), e.rodadas.map(function (x) { return h('td', { class: 'n', text: String(l.porRodada[x.id] || 0) }); }), h('td', { class: 'n' }, h('strong', { text: String(l.total) }))); }))),
-        erro, id === 'placar' ? h('div', { class: 'linha-botoes', style: 'margin-top:14px' }, botao('Ir para o fechamento →', 'avancar')) : h('p', { class: 'aviso ok', style: 'margin-top:14px', text: 'Última etapa. A sala permanece disponível até expirar por inatividade.' }));
+        id === 'fechamento' ? h('p', { class: 'pergunta-final', style: 'font-size:1.4rem', text: e.fechamentoPrevio.pergunta }) : null);
+      if (id === 'placar') {
+        // desempate
+        if (e.temDesempate && !dz && e.reveladas === 0 && e.empatePodio.length) nos.push(h('div', { class: 'privado' }, h('strong', { text: 'Empate no pódio' }),
+          h('p', { text: 'Equipes empatadas entre as três primeiras posições: ' + e.empatePodio.join(', ') + '.' }),
+          h('p', { class: 'apoio', text: 'Pergunta de desempate: ' + e.desempatePrivado.pergunta + ' Resposta: ' + e.desempatePrivado.resposta + '. ' + e.desempatePrivado.referencia }),
+          h('div', { class: 'linha-botoes' }, botao('Abrir desempate', 'desempate_abrir', null, 'secundario')),
+          h('p', { class: 'apoio', text: 'Opcional. Sem desempate, as equipes dividem a posição. Depois de iniciar a revelação do placar, não é mais possível desempatar.' })));
+        if (dz) nos.push(h('div', { class: 'privado' }, h('strong', { text: aberto ? 'Desempate aberto' : 'Desempate encerrado' }),
+          h('p', { text: dz.pergunta }),
+          h('p', { role: 'status' }, aberto ? h('strong', { text: dz.recebidos + ' de ' + dz.equipes.length + ' palpites recebidos.' }) : h('strong', { text: 'Resposta: ' + dz.resposta + '.' })),
+          aberto ? h('p', { class: 'apoio', text: 'Resposta (só nesta tela): ' + e.desempatePrivado.resposta + '. Participam: ' + dz.equipes.join(', ') + '.' })
+            : h('ul', null, dz.palpites.map(function (x) { return h('li', { text: x.nome + ': ' + (x.palpite === null ? 'sem palpite' : x.palpite) }); })),
+          aberto ? h('div', { class: 'linha-botoes' }, botao('Encerrar desempate', 'desempate_encerrar')) : null));
+        nos.push(h('p', { role: 'status' }, h('strong', { text: 'Na projeção: ' }), e.placarCompleto ? 'placar completo.' : e.reveladas + ' de ' + e.placar.length + ' equipes reveladas (do último ao primeiro).'));
+      }
+      nos.push(h('table', { class: 'placar' }, h('caption', { class: 'oculto-visual', text: 'Placar completo, visão privada do moderador' }),
+          h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Pos.' }), h('th', { scope: 'col', text: 'Equipe' }), e.rodadas.map(function (x, k) { return h('th', { scope: 'col', class: 'n', title: x.titulo, text: 'R' + (k + 1) }); }), h('th', { scope: 'col', class: 'n', text: 'Total' }), h('th', { scope: 'col', text: 'Selos' }))),
+          h('tbody', null, e.placar.map(function (l) { return h('tr', null, h('td', { class: 'pos', text: EL.posicao(l.posicao) }), h('td', { text: l.nome }), e.rodadas.map(function (x) { return h('td', { class: 'n', text: String(l.porRodada[x.id] || 0) }); }), h('td', { class: 'n' }, h('strong', { text: String(l.total) })), h('td', { text: l.selos.map(function (s) { return e.nomesSelos[s]; }).join(', ') || '—' })); }))),
+        erro);
+      if (id === 'placar') nos.push(h('div', { class: 'linha-botoes', style: 'margin-top:14px' },
+        !e.placarCompleto ? h('button', { class: 'botao', type: 'button', disabled: aberto, text: 'Revelar próxima posição', onclick: function () { acao('revelar_posicao'); } }) : null,
+        !e.placarCompleto ? h('button', { class: 'botao secundario', type: 'button', disabled: aberto, text: 'Revelar tudo de uma vez', onclick: function () { acao('revelar_tudo'); } }) : null,
+        e.placarCompleto ? botao('Ir para o fechamento →', 'avancar') : null),
+        e.placarCompleto ? null : h('p', null, h('button', { class: 'botao discreto', type: 'button', disabled: aberto, text: 'Ir para o fechamento sem revelar posição por posição', onclick: function () { acao('avancar'); } })));
+      else nos.push(h('p', { class: 'aviso ok', style: 'margin-top:14px', text: 'Última etapa. A sala permanece disponível até expirar por inatividade.' }));
     }
     return h('section', { class: 'cartao' }, nos);
   }

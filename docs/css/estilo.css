@@ -91,6 +91,18 @@ input.codigo { font-size: 1.5rem; letter-spacing: .25em; text-transform: upperca
 .ordenar .mover { grid-column: 1 / -1; display: flex; gap: 8px; }
 .ordenar .mover .botao { flex: 1; min-height: 46px; padding: 6px 10px; }
 
+/* gamificação */
+.carta-dobro { border: 2px dashed var(--tinta); border-radius: 12px; padding: 12px; margin: 4px 0 18px; background: #fbf8ee; }
+.carta-dobro fieldset { margin-bottom: 6px; }
+.selo.dobro { color: #fff; background: var(--tinta); border-color: var(--tinta); }
+.selo.conquista { color: var(--aviso); background: var(--aviso-fundo); border-color: var(--aviso); font-size: .85rem; padding: 4px 10px; }
+.selos { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.opcao.eliminada span { text-decoration: line-through; color: var(--tinta-2); background: #eeece6; border-style: dashed; }
+.opcao.eliminada input { cursor: not-allowed; }
+.linha-ajuda { margin: -8px 0 18px; }
+.linha-ajuda .botao { min-height: 44px; padding: 8px 14px; }
+.sobe { color: var(--ok); font-weight: 700; } .desce { color: var(--erro); font-weight: 700; }
+
 /* mensagens */
 .aviso { border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; border: 1px solid; font-weight: 550; }
 .aviso.ok { background: var(--ok-fundo); border-color: var(--ok); color: var(--ok); }

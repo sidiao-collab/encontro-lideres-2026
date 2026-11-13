@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
-// Contém apenas enunciados; o gabarito fica no roteiro impresso do moderador.
+// Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-13",
+  "versao": "2026-11-13b",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
@@ -12,7 +12,7 @@ window.CONTINGENCIA_DADOS = {
       "id": "p1",
       "tipo": "capa",
       "titulo": "Encontro de Líderes 2026",
-      "texto": "Coordenadores e professores da UNIFASAM e da FACULDADE INTEGRA. Quarenta minutos, um celular por equipe."
+      "texto": "Coordenadores e professores da UNIFASAM e da FACULDADE INTEGRA. Quarenta e cinco minutos, um celular por equipe."
     },
     {
       "id": "p2",
@@ -74,25 +74,29 @@ window.CONTINGENCIA_DADOS = {
       "id": "r1",
       "tipo": "associacao",
       "titulo": "Quem fez o quê?",
-      "instrucao": "Para cada enunciado, a equipe indica: UNIFASAM, FACULDADE INTEGRA ou Ambas. Marquem “Ambas” apenas quando o fato constar nos dois PDIs.",
-      "regraPontuacao": "25 pontos por enunciado correto (máximo de 100).",
-      "duracaoMin": 7,
+      "instrucao": "Para cada enunciado, a equipe indica: UNIFASAM, FACULDADE INTEGRA ou Ambas. Marquem “Ambas” apenas quando o fato constar nos dois PDIs. Usem a Carta Dobro no enunciado em que mais confiam.",
+      "regraPontuacao": "20 pontos por enunciado correto (100 na rodada). Carta Dobro: o enunciado escolhido vale 40 se estiver certo.",
+      "duracaoMin": 8,
       "itens": [
         {
-          "id": "A-01",
-          "enunciado": "O Estatuto a define como “elemento catalisador e polo irradiador” de ações voltadas ao desenvolvimento local e regional."
-        },
-        {
-          "id": "A-02",
-          "enunciado": "Desde o projeto, antes mesmo de iniciar a operação, manteve o foco na sustentabilidade em quatro dimensões: econômica, social, ambiental e cultural."
-        },
-        {
-          "id": "A-03",
-          "enunciado": "Tem, em sua origem, a experiência educacional do Prof. Paulo Gonçalves de Castro."
+          "id": "A-06",
+          "enunciado": "Ao mudar de organização acadêmica, ganhou autonomia para criar, organizar e extinguir cursos na sede sem autorização prévia."
         },
         {
           "id": "A-04",
           "enunciado": "Em 2024, inaugurou dentro do Fórum da cidade, em parceria com o Tribunal de Justiça de Goiás, o Núcleo de Práticas Jurídicas e o Programa Mais Vida."
+        },
+        {
+          "id": "A-08",
+          "enunciado": "Oferece Mestrado Acadêmico em Educação em parceria com a Universidade de Santa Cruz do Sul."
+        },
+        {
+          "id": "A-10",
+          "enunciado": "O PDI destina no mínimo 10% da carga horária dos cursos de graduação a atividades de extensão integradas ao currículo."
+        },
+        {
+          "id": "A-05",
+          "enunciado": "Lista “Verdade e Transparência” entre seus valores institucionais, como base da política de comunicação e da Ouvidoria."
         }
       ]
     },
@@ -100,21 +104,21 @@ window.CONTINGENCIA_DADOS = {
       "id": "r2",
       "tipo": "ordenacao",
       "titulo": "Linha do tempo institucional: de 2001 a 2026",
-      "instrucao": "Ordenem os acontecimentos do mais antigo (no topo) ao mais recente, usando os botões Subir e Descer.",
-      "regraPontuacao": "20 pontos por acontecimento na posição correta (máximo de 100). Há pontuação parcial.",
-      "duracaoMin": 7,
+      "instrucao": "Ordenem os acontecimentos do mais antigo (no topo) ao mais recente, usando os botões Subir e Descer. Usem a Carta Dobro no acontecimento cuja posição a equipe tem mais certeza.",
+      "regraPontuacao": "100 pontos divididos igualmente entre os acontecimentos; pontua cada um que estiver na posição correta (pontuação parcial). Carta Dobro: o acontecimento escolhido vale em dobro se estiver na posição certa.",
+      "duracaoMin": 8,
       "itens": [
+        {
+          "id": "T-06",
+          "texto": "Início do projeto estrutural da FACULDADE INTEGRA, depois dos estudos de viabilidade."
+        },
         {
           "id": "T-02",
           "texto": "Convite de Ari Schmidt dá origem ao projeto da FACULDADE INTEGRA em Caldas Novas."
         },
         {
-          "id": "T-01",
-          "texto": "Credenciamento da Faculdade Sul-Americana (FASAM), origem da UNIFASAM."
-        },
-        {
-          "id": "T-05",
-          "texto": "CONSUP da FACULDADE INTEGRA aprova o PDI 2026–2030."
+          "id": "T-08",
+          "texto": "FACULDADE INTEGRA inaugura o Núcleo de Práticas Jurídicas no Fórum de Caldas Novas."
         },
         {
           "id": "T-04",
@@ -123,6 +127,10 @@ window.CONTINGENCIA_DADOS = {
         {
           "id": "T-03",
           "texto": "Credenciamento da instituição de Goiânia para a oferta de educação a distância."
+        },
+        {
+          "id": "T-07",
+          "texto": "Recredenciamento da instituição de Goiânia, ainda como faculdade."
         }
       ]
     },
@@ -130,24 +138,28 @@ window.CONTINGENCIA_DADOS = {
       "id": "r3",
       "tipo": "decisao",
       "titulo": "Desafio de decisão",
-      "instrucao": "Leiam o caso, escolham uma ação e escrevam uma justificativa curta. A justificativa não vale pontos: ela será usada na conversa.",
-      "regraPontuacao": "100 pontos para a ação que atende aos três elementos do critério; 50 para a que atende a dois; 0 para a que não atende a nenhum.",
+      "instrucao": "Leiam o caso, escolham uma das quatro ações e escrevam uma justificativa curta. A justificativa não vale pontos: ela será usada na conversa.",
+      "regraPontuacao": "100 pontos para a ação que atende aos três elementos do critério; 70 para a que atende a dois; 40 para a que atende a um; 0 para a que não atende a nenhum. Nesta rodada não há Carta Dobro.",
       "duracaoMin": 8,
-      "caso": "Caso hipotético. Você coordena um curso de graduação. No relatório da CPA, a maioria dos estudantes do 3º período diz não ver relação entre as atividades de extensão do currículo e a profissão. A presença nessas atividades caiu ao longo do semestre.",
+      "caso": "Caso hipotético. Você coordena um curso de graduação. A participação dos estudantes do seu curso na autoavaliação conduzida pela CPA caiu pela metade em um ano. Nos corredores, eles dizem que respondem e “nada muda”.",
       "pergunta": "Qual deve ser a sua primeira ação?",
-      "criterio": "Critério de pontuação: vale mais a ação que (1) investiga a causa apontada pela autoavaliação antes de mudar, (2) passa pelo NDE ou colegiado do curso e (3) devolve aos estudantes o que foi decidido.",
+      "criterio": "Critério de pontuação: vale mais a ação que (1) investiga a causa antes de mudar, (2) passa pelo NDE ou colegiado do curso e (3) devolve aos estudantes o que foi decidido.",
       "opcoes": [
         {
           "id": "a",
-          "texto": "Trocar as atividades por uma jornada única, definida pela coordenação, para recuperar a presença ainda neste semestre."
+          "texto": "Reunir os líderes de turma para ouvir os motivos da baixa adesão e registrar o que disserem."
         },
         {
           "id": "b",
-          "texto": "Levar o resultado ao NDE, ouvir representantes da turma sobre as causas, redesenhar as atividades a partir de demandas reais da comunidade e comunicar aos estudantes o que muda e quando será reavaliado."
+          "texto": "Vincular a participação na autoavaliação a horas de atividades complementares, para garantir a adesão."
         },
         {
           "id": "c",
-          "texto": "Apresentar o resultado ao NDE, analisar as causas com os docentes e redesenhar as atividades para o próximo semestre, registrando a mudança no PPC."
+          "texto": "Analisar com o NDE os relatórios anteriores, identificar por que as demandas não foram atendidas e executar duas melhorias neste semestre."
+        },
+        {
+          "id": "d",
+          "texto": "Levantar com representantes discentes o que foi pedido nas últimas avaliações, definir no colegiado o que será atendido e divulgar às turmas o que mudou e o que não mudará, com os motivos, antes do próximo ciclo."
         }
       ]
     },
@@ -155,73 +167,59 @@ window.CONTINGENCIA_DADOS = {
       "id": "r4",
       "tipo": "quiz",
       "titulo": "Quiz final",
-      "instrucao": "Respondam às quatro questões e enviem tudo de uma vez. Cada questão tem uma única resposta correta.",
-      "regraPontuacao": "25 pontos por questão correta (máximo de 100).",
-      "duracaoMin": 7,
+      "instrucao": "Respondam às seis questões e enviem tudo de uma vez. Cada questão tem uma única resposta correta. A equipe pode usar a Ajuda 50:50 em uma questão e a Carta Dobro em uma questão.",
+      "regraPontuacao": "100 pontos divididos igualmente entre as questões. Carta Dobro: a questão escolhida vale em dobro se estiver certa. Ajuda 50:50: uma vez, elimina duas alternativas erradas de uma questão.",
+      "duracaoMin": 9,
       "questoes": [
         {
-          "id": "Q-01",
-          "enunciado": "Qual alternativa corresponde à missão da UNIFASAM?",
+          "id": "Q-05",
+          "enunciado": "A visão da UNIFASAM projeta a instituição como referência de ensino superior de qualidade em que âmbito?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "Formar cidadãos comprometidos com a ética profissional, por meio do ensino de qualidade e da disseminação de valores humanos, cidadãos e do desenvolvimento sustentável."
+              "texto": "Na Região Metropolitana de Goiânia."
             },
             {
               "id": "b",
-              "texto": "Ser referência regional em qualidade acadêmica e compromisso social."
+              "texto": "No Vale do Meia Ponte."
             },
             {
               "id": "c",
-              "texto": "Fortalecer a sociedade, desenvolver a ciência, valorizar a cultura e formar cidadãos críticos e humanizados, comprometidos com o desenvolvimento social, ético e sustentável."
+              "texto": "No Estado de Goiás."
             },
             {
               "id": "d",
-              "texto": "Formar profissionais para os setores de turismo, saúde e agronegócio da região."
+              "texto": "Na Região Centro-Oeste."
+            },
+            {
+              "id": "e",
+              "texto": "No Brasil."
             }
           ]
         },
         {
-          "id": "Q-02",
-          "enunciado": "Quais são os três significados associados ao nome INTEGRA?",
+          "id": "Q-06",
+          "enunciado": "Em 2021, que ato ampliou a autonomia da instituição de Goiânia para criar, organizar e extinguir cursos na sede?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "FORMA, COMPLETA e APROXIMA."
+              "texto": "O recredenciamento institucional."
             },
             {
               "id": "b",
-              "texto": "ENSINA, PESQUISA e ESTENDE."
+              "texto": "O credenciamento para a oferta de educação a distância."
             },
             {
               "id": "c",
-              "texto": "UNE, INCLUI e TRANSFORMA."
+              "texto": "O reconhecimento dos cursos da área da saúde."
             },
             {
               "id": "d",
-              "texto": "ACOLHE, FORMA e EMPREGA."
-            }
-          ]
-        },
-        {
-          "id": "Q-03",
-          "enunciado": "Segundo o PDI da UNIFASAM, qual é a natureza da Comissão Própria de Avaliação (CPA)?",
-          "opcoes": [
-            {
-              "id": "a",
-              "texto": "Executiva: a CPA decide e implementa as melhorias que identifica."
+              "texto": "O credenciamento como Centro Universitário."
             },
             {
-              "id": "b",
-              "texto": "Avaliativa e de assessoramento: a CPA avalia e recomenda; decidir e implementar cabe aos órgãos de gestão."
-            },
-            {
-              "id": "c",
-              "texto": "Fiscalizadora: a CPA representa o INEP dentro da instituição."
-            },
-            {
-              "id": "d",
-              "texto": "Consultiva apenas para a Reitoria, sem participação de estudantes."
+              "id": "e",
+              "texto": "A aprovação do PDI pelo Conselho Superior."
             }
           ]
         },
@@ -244,12 +242,98 @@ window.CONTINGENCIA_DADOS = {
             {
               "id": "d",
               "texto": "Integra em Ação."
+            },
+            {
+              "id": "e",
+              "texto": "Fórum de Mobilidade Urbana."
+            }
+          ]
+        },
+        {
+          "id": "Q-11",
+          "enunciado": "No brasão da FACULDADE INTEGRA, o que significa o sobrenome Castro?",
+          "opcoes": [
+            {
+              "id": "a",
+              "texto": "Paz."
+            },
+            {
+              "id": "b",
+              "texto": "Fecundidade."
+            },
+            {
+              "id": "c",
+              "texto": "Sabedoria."
+            },
+            {
+              "id": "d",
+              "texto": "Fortaleza."
+            },
+            {
+              "id": "e",
+              "texto": "Vitória."
+            }
+          ]
+        },
+        {
+          "id": "Q-12",
+          "enunciado": "A FACULDADE INTEGRA mantém, desde o projeto, o foco na sustentabilidade em quatro dimensões: econômica, social, ambiental e qual outra?",
+          "opcoes": [
+            {
+              "id": "a",
+              "texto": "Tecnológica."
+            },
+            {
+              "id": "b",
+              "texto": "Cultural."
+            },
+            {
+              "id": "c",
+              "texto": "Política."
+            },
+            {
+              "id": "d",
+              "texto": "Territorial."
+            },
+            {
+              "id": "e",
+              "texto": "Educacional."
+            }
+          ]
+        },
+        {
+          "id": "Q-03",
+          "enunciado": "Segundo o PDI da UNIFASAM, qual é a natureza da Comissão Própria de Avaliação (CPA)?",
+          "opcoes": [
+            {
+              "id": "a",
+              "texto": "Executiva: a CPA decide e implementa as melhorias que identifica."
+            },
+            {
+              "id": "b",
+              "texto": "Avaliativa e de assessoramento: a CPA avalia e recomenda; decidir e implementar cabe aos órgãos de gestão."
+            },
+            {
+              "id": "c",
+              "texto": "Fiscalizadora: a CPA representa o INEP dentro da instituição."
+            },
+            {
+              "id": "d",
+              "texto": "Consultiva apenas para a Reitoria, sem participação de estudantes."
+            },
+            {
+              "id": "e",
+              "texto": "Deliberativa: as recomendações da CPA têm força de resolução do Conselho Superior."
             }
           ]
         }
       ]
     }
   ],
+  "desempate": {
+    "pergunta": "Desempate: segundo o PDI, quantas bolsas de estudo a FACULDADE INTEGRA concedeu em 2024?",
+    "instrucao": "Digitem um número inteiro. Fica à frente a equipe que chegar mais perto."
+  },
   "fechamento": {
     "pergunta": "Que prática da outra instituição você gostaria de experimentar no seu curso?",
     "apoio": "Conversem por um minuto com quem está ao lado. Depois, ouviremos duas ou três vozes."

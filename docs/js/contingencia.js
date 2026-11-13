@@ -11,7 +11,12 @@
   if (!D) { app.appendChild(h('p', { style: 'padding:16px', text: 'Dados de contingência não encontrados. Rode "npm run contingencia" e publique de novo.' })); return; }
 
   var passos = D.slides.map(function (s, k) { return { tipo: 'slide', slide: s, rotulo: 'Painel ' + (k + 1) + '/' + D.slides.length }; });
-  D.rodadas.forEach(function (r, k) { passos.push({ tipo: 'rodada', rodada: r, rotulo: 'Rodada ' + (k + 1) }); });
+  D.rodadas.forEach(function (r, k) {
+    if (r.tipo === 'quiz' && r.questoes.length > 3) { // alternativas precisam caber na tela: três questões por vez
+      for (var i = 0; i < r.questoes.length; i += 3) passos.push({ tipo: 'rodada', rodada: r, de: i, ate: i + 3, rotulo: 'Rodada ' + (k + 1) + ' · questões ' + (i + 1) + ' a ' + Math.min(i + 3, r.questoes.length) });
+    } else passos.push({ tipo: 'rodada', rodada: r, rotulo: 'Rodada ' + (k + 1) });
+  });
+  if (D.desempate) passos.push({ tipo: 'desempate', rotulo: 'Desempate (só se houver empate no pódio)' });
   passos.push({ tipo: 'placar', rotulo: 'Placar manual' }); passos.push({ tipo: 'fechamento', rotulo: 'Fechamento' });
   if (salvo.passo >= passos.length) salvo.passo = 0;
   function gravar() { EL.guarda.gravar(CH, salvo); }
@@ -31,13 +36,14 @@
         h('div', null, h('p', { text: m.fato }), h('p', { class: 'porque', text: 'Por que importa: ' + m.importancia })));
     }))];
   }
-  function corpoRodada(r) {
-    var topo = [h('p', { class: 'rotulo-etapa', text: r.duracaoMin + ' minutos · resposta em papel, uma por equipe' }), h('h1', { class: 'titulo-menor', text: r.titulo }), h('p', { class: 'apoio', style: 'font-size:.72em', text: r.instrucao.replace(/, usando os botões Subir e Descer/, '') + ' ' + r.regraPontuacao })];
+  function corpoRodada(r, de, ate) {
+    var topo = [h('p', { class: 'rotulo-etapa', text: r.duracaoMin + ' minutos · resposta em papel, uma por equipe' }), h('h1', { class: 'titulo-menor', text: r.titulo }), h('p', { class: 'apoio', style: 'font-size:.72em', text: r.instrucao.replace(/, usando os botões Subir e Descer/, '').replace(/A equipe pode usar a Ajuda 50:50[^.]*\./, 'No papel, cada equipe pode marcar uma questão com a Carta Dobro; não há Ajuda 50:50.') + ' ' + r.regraPontuacao })];
     if (r.tipo === 'associacao') return topo.concat(h('div', { class: 'duas-colunas' }, r.itens.map(function (it, k) { return h('div', { class: 'caixa' }, h('p', { class: 'enunciado' }, h('span', { class: 'num', text: String(k + 1) }), it.enunciado)); })));
     if (r.tipo === 'ordenacao') return topo.concat(h('div', { class: 'duas-colunas' }, r.itens.map(function (it, k) { return h('div', { class: 'caixa' }, h('p', { class: 'enunciado' }, h('span', { class: 'num', text: 'ABCDEFG'.charAt(k) }), it.texto)); })));
     if (r.tipo === 'decisao') return topo.concat([h('p', { style: 'font-size:.9em', text: r.caso }), h('p', { class: 'regra', style: 'font-size:.72em', text: r.criterio }), h('p', { class: 'enunciado', text: r.pergunta }),
-      h('div', { style: 'display:grid;grid-template-columns:repeat(3,1fr);gap:1.2vw' }, r.opcoes.map(function (o) { return h('div', { class: 'caixa' }, h('p', null, h('strong', { text: o.id.toUpperCase() + ') ' }), o.texto)); }))]);
-    return topo.concat(h('div', { class: 'duas-colunas' }, r.questoes.map(function (q, k) { return h('div', { class: 'caixa' }, h('p', { class: 'enunciado' }, h('span', { class: 'num', text: String(k + 1) }), q.enunciado), h('ol', { type: 'A' }, q.opcoes.map(function (o) { return h('li', { text: o.texto }); }))); })));
+      h('div', { class: 'duas-colunas' }, r.opcoes.map(function (o) { return h('div', { class: 'caixa' }, h('p', null, h('strong', { text: o.id.toUpperCase() + ') ' }), o.texto)); }))]);
+    var parte = r.questoes.slice(de || 0, ate || r.questoes.length);
+    return topo.concat(h('div', { style: 'display:grid;grid-template-columns:repeat(' + parte.length + ',1fr);gap:1.2vw' }, parte.map(function (q, k) { return h('div', { class: 'caixa' }, h('p', { class: 'enunciado' }, h('span', { class: 'num', text: String((de || 0) + k + 1) }), q.enunciado), h('ol', { type: 'A' }, q.opcoes.map(function (o) { return h('li', { text: o.texto }); }))); })));
   }
   function corpoPlacar() {
     var tabela = h('table', { class: 'placar manual' }, h('caption', { class: 'oculto-visual', text: 'Lançamento manual de pontos por equipe e rodada' }),
@@ -46,20 +52,21 @@
         var e = salvo.equipes[l.i];
         return h('tr', null, h('td', { class: 'pos', text: EL.posicao(l.posicao) }),
           h('td', null, h('input', { type: 'text', value: e.nome, maxlength: '24', 'aria-label': 'Nome da equipe ' + (l.i + 1), onchange: function () { e.nome = this.value; gravar(); desenhar(); } })),
-          D.rodadas.map(function (r, k) { return h('td', { class: 'n' }, h('input', { type: 'number', min: '0', max: '100', step: '5', inputmode: 'numeric', value: e.pontos[k] === null ? '' : e.pontos[k], 'aria-label': 'Pontos de ' + (e.nome || 'equipe ' + (l.i + 1)) + ' na rodada ' + (k + 1), onchange: function () { var v = Math.max(0, Math.min(100, Number(this.value) || 0)); e.pontos[k] = this.value === '' ? null : v; gravar(); desenhar(); } })); }),
+          D.rodadas.map(function (r, k) { return h('td', { class: 'n' }, h('input', { type: 'number', min: '0', max: '120', step: '1', inputmode: 'numeric', value: e.pontos[k] === null ? '' : e.pontos[k], 'aria-label': 'Pontos de ' + (e.nome || 'equipe ' + (l.i + 1)) + ' na rodada ' + (k + 1), onchange: function () { var v = Math.max(0, Math.min(120, Number(this.value) || 0)); e.pontos[k] = this.value === '' ? null : v; gravar(); desenhar(); } })); }),
           h('td', { class: 'n' }, h('strong', { text: String(l.total) })),
           h('td', null, h('button', { class: 'botao discreto', type: 'button', 'aria-label': 'Remover ' + (e.nome || 'equipe'), text: 'Remover', onclick: function () { if (!this.getAttribute('data-ok')) { this.setAttribute('data-ok', '1'); this.textContent = 'Confirmar'; return; } salvo.equipes.splice(l.i, 1); gravar(); desenhar(); } })));
       })));
     return [h('h1', { text: 'Placar final' }), salvo.equipes.length ? tabela : h('p', { text: 'Adicione as equipes para lançar os pontos.' }),
       h('div', { class: 'linha-botoes manual', style: 'margin-top:1.4vh' }, h('button', { class: 'botao secundario', type: 'button', text: '+ Adicionar equipe', onclick: function () { salvo.equipes.push({ nome: '', pontos: D.rodadas.map(function () { return null; }) }); gravar(); desenhar(); } })),
-      h('p', { class: 'apoio', style: 'font-size:.6em;margin-top:1vh', text: 'De 0 a 100 pontos por rodada, conforme o gabarito do roteiro impresso. Os lançamentos ficam salvos neste navegador. Equipes com a mesma pontuação dividem a posição.' })];
+      h('p', { class: 'apoio', style: 'font-size:.6em;margin-top:1vh', text: 'Pontos por rodada conforme o gabarito impresso (até 100, mais o bônus da Carta Dobro). Os lançamentos ficam salvos neste navegador. Equipes com a mesma pontuação dividem a posição.' })];
   }
 
   function ir(n) { salvo.passo = Math.max(0, Math.min(passos.length - 1, n)); gravar(); desenhar(); window.scrollTo(0, 0); }
   function desenhar() {
     var p = passos[salvo.passo], corpo;
     if (p.tipo === 'slide') corpo = corpoSlide(p.slide);
-    else if (p.tipo === 'rodada') corpo = corpoRodada(p.rodada);
+    else if (p.tipo === 'rodada') corpo = corpoRodada(p.rodada, p.de, p.ate);
+    else if (p.tipo === 'desempate') corpo = [h('p', { class: 'rotulo-etapa', text: 'Desempate · só para equipes empatadas no pódio' }), h('h1', { text: D.desempate.pergunta }), h('p', { text: D.desempate.instrucao + ' Cada equipe escreve o palpite em uma folha.' })];
     else if (p.tipo === 'placar') corpo = corpoPlacar();
     else corpo = [h('p', { class: 'rotulo-etapa', text: 'Para conversar' }), h('h1', { class: 'pergunta-final', text: D.fechamento.pergunta }), h('p', { style: 'margin-top:1em', text: D.fechamento.apoio })];
     EL.limpar(app);
