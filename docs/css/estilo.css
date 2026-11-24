@@ -151,21 +151,21 @@ table.placar .pos { font-family: var(--serifa); font-weight: 700; font-size: 1.2
 .justificativa { border-left: 4px solid var(--linha); padding: 4px 0 4px 12px; margin: 8px 0; }
 
 /* ---------- projeção (16:9) ---------- */
-body.projecao { font-size: clamp(16px, 1.55vw, 34px); overflow: hidden; }
+body.projecao { font-size: clamp(18px, 1.85vw, 40px); overflow: hidden; }
 .tela { height: 100vh; display: grid; grid-template-rows: auto 1fr auto; padding: 2.2vh 3vw; gap: 1.6vh; }
 .tela-topo { display: flex; align-items: center; justify-content: space-between; gap: 2vw; border-bottom: .25vh solid var(--tinta); padding-bottom: 1.4vh; }
 .tela-topo .evento { font-family: var(--serifa); font-weight: 700; font-size: 1.15em; }
 .tela-topo .evento small { display: block; font-family: var(--sans); font-size: .55em; letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-2); font-weight: 600; }
-.tela-topo .marcas { width: 30vw; }
+.tela-topo .marcas { width: 38vw; }
 .tela-topo .marca { padding: .8vh .9vw; }
 .tela-corpo { min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-.tela-rodape { display: flex; justify-content: space-between; align-items: center; gap: 2vw; font-size: .7em; color: var(--tinta-2); border-top: 1px solid var(--linha); padding-top: 1vh; }
+.tela-rodape { display: flex; justify-content: space-between; align-items: center; gap: 2vw; font-size: .85em; color: var(--tinta-2); border-top: 1px solid var(--linha); padding-top: 1vh; }
 .tela-rodape strong { color: var(--tinta); letter-spacing: .12em; font-size: 1.25em; }
 .tela h1 { font-size: 2.5em; margin-bottom: .3em; }
 .tela h2, .tela h1.titulo-menor { font-size: 1.7em; }
 .tela h1.pergunta-final { font-size: 2.4em; margin: 0; }
 .tela .rotulo-etapa { font-size: .62em; }
-.tela .inst, .tela .selo { font-size: .6em; }
+.tela .inst, .tela .selo { font-size: .72em; }
 .capa { display: grid; grid-template-columns: 1.25fr 1fr; gap: 4vw; align-items: center; }
 .capa .marcas { margin: 2vh 0; }
 .entrada-qr { background: #fff; border: 1px solid var(--linha); border-radius: 1.2vw; padding: 2vh 1.6vw; text-align: center; }
@@ -190,8 +190,8 @@ body.projecao { font-size: clamp(16px, 1.55vw, 34px); overflow: hidden; }
 .tela table.placar td, .tela table.placar th { padding: .9vh .8vw; }
 .tela table.placar td { font-size: 1.05em; }
 .linha-tempo { list-style: none; padding: 0; margin: 0; display: grid; gap: 1vh; }
-.linha-tempo li { display: grid; grid-template-columns: 5em 12.5em 1fr; gap: 1em; align-items: center; background: #fff; border: 1px solid var(--linha); border-radius: .8vw; padding: 1vh 1.2vw; font-size: .82em; }
-.linha-tempo .ano { font-family: var(--serifa); font-weight: 700; font-size: 1.5em; }
+.linha-tempo li { display: grid; grid-template-columns: 7.2em 12.5em 1fr; gap: 1em; align-items: center; background: #fff; border: 1px solid var(--linha); border-radius: .8vw; padding: 1vh 1.2vw; font-size: .82em; }
+.linha-tempo .ano { font-family: var(--serifa); font-weight: 700; font-size: 1.2em; }
 
 @media (max-width: 420px) {
   body { font-size: 16px; }
@@ -199,3 +199,9 @@ body.projecao { font-size: clamp(16px, 1.55vw, 34px); overflow: hidden; }
   .cartao { padding: 14px; }
 }
 @media (prefers-reduced-motion: no-preference) { .botao { transition: transform .05s; } .botao:active { transform: translateY(1px); } }
+
+/* progresso e itens pendentes na tela da equipe */
+.progresso { position: sticky; bottom: 0; margin: 14px -18px -18px; padding: 10px 18px; background: var(--cartao); border-top: 2px solid var(--tinta); border-radius: 0 0 var(--raio) var(--raio); font-weight: 700; z-index: 2; }
+.progresso.completo { color: var(--ok); border-top-color: var(--ok); }
+fieldset.faltando { outline: 3px solid var(--erro); outline-offset: 6px; border-radius: 8px; }
+fieldset.faltando legend::after { content: " — falta responder"; color: var(--erro); font-weight: 700; font-size: .85em; }
