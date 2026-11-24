@@ -36,7 +36,7 @@ window.CONTINGENCIA_DADOS = {
       "pontos": [
         "52 ingressantes no primeiro vestibular de Medicina.",
         "Mais de 2 mil estudantes na base discente conjunta.",
-        "4,86: resultado avaliativo do Curso Técnico em Saúde Bucal no CEE-GO.",
+        "4,86: resultado avaliativo (escala de 1 a 5) do Curso Técnico em Saúde Bucal no CEE-GO.",
         "66 atividades na agenda da UNIFASAM e 88 eventos com participação da Faculdade Integra."
       ],
       "referencia": "Retrospectiva 2026, slides 3 e 12 e 13"
@@ -56,7 +56,7 @@ window.CONTINGENCIA_DADOS = {
         {
           "instituicao": "unifasam",
           "situacao": "documentado",
-          "fato": "Retrofit da infraestrutura, Prêmio IEL em setembro (IES destaque e inovadora na gestão dos estágios) e resultados de avaliação externa em 2026 nos cursos de Sistemas de Informação, Ciência da Computação (EaD), Nutrição, Biomedicina EaD, Administração EaD e Ciências Contábeis EaD.",
+          "fato": "Retrofit da infraestrutura, Prêmio IEL em setembro (2º lugar, IES destaque e inovadora na gestão dos estágios), primeira turma do curso semipresencial de Fisioterapia em janeiro, Clínica-Escola de Fonoaudiologia em setembro e resultados de avaliação externa em 2026 nos cursos de Sistemas de Informação, Ciência da Computação (EaD), Nutrição, Biomedicina EaD, Administração EaD e Ciências Contábeis EaD.",
           "importancia": "Reúne avaliação externa, destaque na gestão dos estágios e renovação do espaço e da comunicação da UNIFASAM. Resultados de avaliação não substituem o ato oficial de reconhecimento.",
           "referencia": "Retrospectiva 2026, slides 7 e 8 e 9"
         },
@@ -84,20 +84,20 @@ window.CONTINGENCIA_DADOS = {
           "enunciado": "Teve o curso de Biomedicina EaD avaliado com resultado 5, em agosto."
         },
         {
-          "id": "A-08",
+          "id": "A-10",
           "enunciado": "Teve o curso de Medicina autorizado em abril de 2026."
         },
         {
-          "id": "A-09",
+          "id": "A-11",
           "enunciado": "Concluiu, em julho, o primeiro vestibular de Medicina, com 52 ingressantes."
         },
         {
-          "id": "A-15",
+          "id": "A-17",
           "enunciado": "Participou do ciclo de avaliações externas de 2026, que começou em abril e teve resultados entre 3 e 5."
         },
         {
           "id": "A-02",
-          "enunciado": "Foi destaque no Prêmio IEL, em setembro, como instituição de ensino superior inovadora na gestão dos estágios."
+          "enunciado": "Conquistou o 2º lugar no Prêmio IEL, em setembro, como instituição de ensino superior inovadora na gestão dos estágios."
         }
       ]
     },
@@ -111,23 +111,23 @@ window.CONTINGENCIA_DADOS = {
       "itens": [
         {
           "id": "T-03",
-          "texto": "Início do processo seletivo de Medicina e atualização do PPC"
-        },
-        {
-          "id": "T-02",
           "texto": "Autorização do curso de Medicina da Faculdade Integra"
         },
         {
+          "id": "T-02",
+          "texto": "Inauguração do Bloco 2 da Faculdade Integra"
+        },
+        {
           "id": "T-08",
-          "texto": "Resultados dos cursos EaD de Administração e Ciências Contábeis da UNIFASAM"
+          "texto": "UNIFASAM conquista o 2º lugar no Prêmio IEL na gestão dos estágios"
         },
         {
           "id": "T-05",
-          "texto": "Primeiro vestibular de Medicina concluído, com 52 ingressantes"
+          "texto": "Arquitetura da Faculdade Integra obtém resultado 5 na avaliação externa"
         },
         {
           "id": "T-04",
-          "texto": "Arquitetura da Faculdade Integra obtém resultado 5 na avaliação externa"
+          "texto": "Início do processo seletivo de Medicina e atualização do PPC"
         }
       ]
     },
@@ -170,7 +170,7 @@ window.CONTINGENCIA_DADOS = {
       "questoes": [
         {
           "id": "Q-03",
-          "enunciado": "Qual foi o resultado avaliativo do Curso Técnico em Saúde Bucal no CEE-GO?",
+          "enunciado": "Qual foi o resultado avaliativo do Curso Técnico em Saúde Bucal no CEE-GO, em uma escala de 1 a 5?",
           "opcoes": [
             {
               "id": "a",
