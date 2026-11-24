@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
 // Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-24c-retrospectiva-mvv",
+  "versao": "2026-11-24d-retrospectiva-mvv-pdi",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
@@ -84,16 +84,16 @@ window.CONTINGENCIA_DADOS = {
           "enunciado": "Teve o curso de Biomedicina EaD avaliado com resultado 5, em agosto."
         },
         {
-          "id": "A-16",
-          "enunciado": "Inclui “Respeito à diversidade” entre os seus valores institucionais."
-        },
-        {
-          "id": "A-20",
-          "enunciado": "Inaugurou o Bloco 2 em fevereiro de 2026."
+          "id": "A-17",
+          "enunciado": "Inclui a humanização entre os seus valores institucionais."
         },
         {
           "id": "A-18",
-          "enunciado": "Inclui “Responsabilidade” entre os seus valores institucionais."
+          "enunciado": "Inclui o respeito à diversidade entre os seus valores institucionais."
+        },
+        {
+          "id": "A-28",
+          "enunciado": "Reestruturou o modelo de gestão, com reuniões semanais entre os gestores, equipes mais integradas e comunicação aprimorada."
         },
         {
           "id": "A-02",
