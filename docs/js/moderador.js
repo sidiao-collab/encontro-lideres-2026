@@ -4,7 +4,7 @@
   var h = EL.h, app = document.getElementById('app');
   var CH = 'el26:moderador';
   var sessao = EL.guarda.ler(CH); // { sala, token } — nunca vai para links
-  var estado = null, sonda = null, semConexao = false, ultimaRev = -1, erroAcao = null, ocupado = false, pedindoPular = false, relogio = null, desvio = 0;
+  var estado = null, sonda = null, semConexao = false, ultimaRev = -1, erroAcao = null, ocupado = false, pedindoPular = false, relogio = null, desvio = 0, pedindoEncerrar = false;
 
   function moldura(conteudo, larga) {
     EL.limpar(app);
@@ -22,13 +22,15 @@
     var campoPin = h('div', { class: 'campo', hidden: true }, h('label', { for: 'pin', text: 'PIN do moderador' }), h('p', { class: 'dica', text: 'Definido na configuração do servidor (MODERATOR_PIN).' }), h('input', { id: 'pin', type: 'password', autocomplete: 'off' }));
     var botao = h('button', { class: 'botao bloco', type: 'submit', text: 'Criar sala' });
     var situacao = h('p', { class: 'apoio', role: 'status', text: 'Verificando o servidor…' });
-    EL.api('GET', '/api/health').then(function (s) {
+    var demora = setTimeout(function () { situacao.textContent = 'Acordando o servidor… isso pode levar até um minuto na primeira vez. Aguarde.'; }, 3000);
+    EL.api('GET', '/api/health', { limiteMs: 70000 }).then(function (s) {
+      clearTimeout(demora);
       situacao.textContent = 'Servidor no ar. Banco de perguntas: versão ' + (s.versaoBanco || 'sem versão') + '.';
       if (s.pinExigido) campoPin.hidden = false;
-    }, function (e) { situacao.textContent = ''; msg.appendChild(h('p', { class: 'aviso erro', text: 'Não foi possível falar com o servidor. ' + (e.mensagem || '') + ' Confira o endereço em config.js e se o serviço está no ar.' })); });
+    }, function (e) { clearTimeout(demora); situacao.textContent = ''; msg.appendChild(h('p', { class: 'aviso erro', text: 'Não foi possível falar com o servidor. ' + (e.mensagem || '') + ' Confira o endereço em config.js e se o serviço está no ar.' })); });
     var form = h('form', { onsubmit: function (ev) {
       ev.preventDefault(); EL.limpar(msg); botao.disabled = true; botao.textContent = 'Criando…';
-      EL.api('POST', '/api/salas', { corpo: { pin: document.getElementById('pin').value } }).then(function (r) {
+      EL.api('POST', '/api/salas', { limiteMs: 70000, corpo: { pin: document.getElementById('pin').value } }).then(function (r) {
         sessao = { sala: r.sala, token: r.tokenModerador }; EL.guarda.gravar(CH, sessao); iniciar();
       }, function (e) { botao.disabled = false; botao.textContent = 'Criar sala'; msg.appendChild(h('p', { class: 'aviso erro', text: e.mensagem })); });
     } }, campoPin, msg, botao);
@@ -43,7 +45,7 @@
     if (ocupado) return; ocupado = true; erroAcao = null;
     var corpo = { acao: nome }; if (extra) Object.keys(extra).forEach(function (k) { corpo[k] = extra[k]; });
     EL.api('POST', '/api/salas/' + sessao.sala + '/controle', { token: sessao.token, corpo: corpo }).then(function (d) {
-      ocupado = false; pedindoPular = false; receber(d, true);
+      ocupado = false; pedindoPular = false; pedindoEncerrar = false; receber(d, true);
     }, function (e) {
       ocupado = false;
       if (e.status === 401 || e.status === 404) return encerrarSessao('A sala expirou ou o servidor foi reiniciado. Crie uma nova sala.');
@@ -117,6 +119,16 @@
     return [h('p', { class: 'apoio', text: 'Acontecimentos sorteados para esta sala (a ordem correta fica no gabarito, depois de abrir):' }), h('ul', null, r.itens.map(function (i) { return h('li', { text: i.texto }); }))];
   }
 
+  /** Se ainda faltam equipes, pede confirmação antes de encerrar (o encerramento é manual e vale para todas). */
+  function botaoEncerrar(e) {
+    var faltam = e.totalEquipes - e.respostasRecebidas;
+    if (faltam <= 0) return botao('Encerrar envios', 'encerrar');
+    if (!pedindoEncerrar) return h('button', { class: 'botao', type: 'button', text: 'Encerrar envios (faltam ' + faltam + ')', onclick: function () { pedindoEncerrar = true; desenhar(); } });
+    return [h('p', { class: 'aviso atencao', role: 'status', text: 'Ainda faltam ' + faltam + (faltam === 1 ? ' equipe' : ' equipes') + ' sem resposta. Quem não enviou fica com 0 pontos nesta rodada.' }),
+      botao('Confirmar: encerrar mesmo assim', 'encerrar', null, 'perigo'),
+      h('button', { class: 'botao secundario', type: 'button', text: 'Voltar', onclick: function () { pedindoEncerrar = false; desenhar(); } })];
+  }
+
   function blocoEtapa(e) {
     var id = e.etapa.id, fase = e.etapa.fase, r = e.rodada;
     var nos = [h('p', { class: 'rotulo-etapa', text: EL.NOMES_ETAPA[id] + (fase ? ' · ' + { preparo: 'aguardando abertura', aberta: 'envios abertos', encerrada: 'envios encerrados', revelada: 'devolutiva na tela' }[fase] : '') })];
@@ -144,7 +156,7 @@
           pedindoPular ? botao('Confirmar: pular esta rodada', 'avancar', { pular: true }, 'perigo') : h('button', { class: 'botao discreto', type: 'button', text: 'Pular rodada', onclick: function () { pedindoPular = true; desenhar(); } })));
       } else if (fase === 'aberta') {
         nos.push(h('p', { role: 'timer' }, 'Tempo de rodada: ', h('span', { class: 'relogio', id: 'relogio', text: '0:00' }), ' · previsto para a rodada inteira: ' + r.duracaoMin + ' min (inclui devolutiva)'),
-          justificativas(e), erro, h('div', { class: 'linha-botoes' }, botao('Encerrar envios', 'encerrar')),
+          justificativas(e), erro, h('div', { class: 'linha-botoes' }, botaoEncerrar(e)),
           h('p', { class: 'apoio', text: 'O encerramento é seu: não há corte automático por tempo.' }), gabarito(e));
       } else if (fase === 'encerrada') {
         nos.push(justificativas(e), erro, h('div', { class: 'linha-botoes' }, botao('Revelar devolutiva', 'revelar'), botao('Reabrir envios', 'reabrir', null, 'secundario')), gabarito(e));

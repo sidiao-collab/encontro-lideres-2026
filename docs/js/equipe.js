@@ -68,8 +68,8 @@
   function salvarRascunho() { EL.guarda.gravar(CH_RASCUNHO, rascunhos); }
 
   // ---------- formulários por tipo ----------
-  function grupoRadio(nome, legenda, opcoes, valor, aoMudar, classe) {
-    return h('fieldset', null, h('legend', null, legenda),
+  function grupoRadio(nome, legenda, opcoes, valor, aoMudar, classe, numero) {
+    return h('fieldset', { 'data-q': numero ? String(numero) : null }, h('legend', null, legenda),
       h('div', { class: 'opcoes ' + (classe || '') }, opcoes.map(function (o) {
         return h('label', { class: 'opcao' + (o.desativada ? ' eliminada' : '') }, h('input', { type: 'radio', name: nome, value: o.id, checked: valor === o.id, disabled: o.desativada, onchange: function () { aoMudar(o.id); } }), h('span', { text: o.texto }));
       })));
@@ -88,7 +88,7 @@
     var d = rascunho(r.id, { itens: {} });
     var ops = [{ id: 'unifasam', texto: 'UNIFASAM' }, { id: 'integra', texto: 'FACULDADE INTEGRA' }, { id: 'ambas', texto: 'Ambas' }];
     return { nos: r.itens.map(function (it, k) {
-      return grupoRadio('a-' + it.id, [h('span', { class: 'num', text: String(k + 1) }), it.enunciado], ops, d.itens[it.id], function (v) { d.itens[it.id] = v; salvarRascunho(); }, 'tres');
+      return grupoRadio('a-' + it.id, [h('span', { class: 'num', text: String(k + 1) }), it.enunciado], ops, d.itens[it.id], function (v) { d.itens[it.id] = v; salvarRascunho(); }, 'tres', k + 1);
     }).concat(campoDobro(r, d, r.itens.map(function (it, k) { return { id: it.id, texto: 'Enunciado ' + (k + 1) }; }))),
       pronto: function () { return r.itens.every(function (it) { return d.itens[it.id]; }) ? faltaDobro(d) : 'Marque uma opção em cada enunciado antes de enviar.'; },
       resposta: function () { return comDobro({ itens: d.itens }, d); } };
@@ -142,7 +142,7 @@
       nos.push(grupoRadio('q-' + q.id, [h('span', { class: 'num', text: String(k + 1) }), q.enunciado], q.opcoes.map(function (o) {
         var fora = minha && aj.eliminadas.indexOf(o.id) >= 0;
         return { id: o.id, texto: o.id.toUpperCase() + ') ' + o.texto + (fora ? ' (eliminada pela Ajuda 50:50)' : ''), desativada: fora };
-      }), d.respostas[q.id], function (v) { d.respostas[q.id] = v; salvarRascunho(); }));
+      }), d.respostas[q.id], function (v) { d.respostas[q.id] = v; salvarRascunho(); }, '', k + 1));
       if (minha) nos.push(h('p', { class: 'aviso ok', role: 'status', text: '✓ Ajuda 50:50 usada nesta questão: duas alternativas erradas foram eliminadas.' }));
       else if (!aj && estado.ajudaDisponivel) nos.push(h('p', { class: 'linha-ajuda' }, pedindoAjuda === q.id
         ? [h('button', { class: 'botao', type: 'button', disabled: enviando, text: 'Confirmar: usar a única Ajuda 50:50 aqui', onclick: function () { usarAjuda(q.id); } }), ' ', h('button', { class: 'botao secundario', type: 'button', text: 'Cancelar', onclick: function () { pedindoAjuda = null; desenhar(true); } })]
@@ -196,7 +196,7 @@
     });
     if (r.tipo === 'ordenacao') return [h('ol', { class: 'ordenar' }, dv.itens.map(function (g, k) {
       var certo = resp && resp.ordem[k] === g.id;
-      return h('li', null, h('span', { class: 'num', text: String(k + 1) }), h('div', null, h('strong', { text: g.ano + ' · ' }), g.texto, ' ', EL.etiqueta(g.instituicao), ' ', resp ? selo(certo) : null, ' ', marcaDobro(resp, g.id), h('p', { class: 'referencia', text: g.detalhe + ' Fonte: ' + g.referencia })));
+      return h('li', null, h('span', { class: 'num', text: String(k + 1) }), h('div', null, h('strong', { text: g.ano + ' · ' }), g.texto, ' ', g.instituicao ? EL.etiqueta(g.instituicao) : null, ' ', resp ? selo(certo) : null, ' ', marcaDobro(resp, g.id), h('p', { class: 'referencia', text: g.detalhe + ' Fonte: ' + g.referencia })));
     })), h('p', { text: dv.comentario })];
     if (r.tipo === 'decisao') return [r.opcoes.map(function (o, k) {
       var g = dv.opcoes[k];
@@ -237,6 +237,33 @@
         : [h('p', null, h('strong', { text: 'Resposta: ' + dz.resposta + '. ' }), dz.comentario), h('ul', null, dz.palpites.map(function (x) { return h('li', { text: x.nome + ': ' + (x.palpite === null ? 'sem palpite' : x.palpite) }); })), h('p', { class: 'referencia', text: 'Fonte: ' + dz.referencia })]);
   }
 
+  /** Marca os itens sem resposta, leva o foco ao primeiro e devolve a lista de números. */
+  function marcarFaltas() {
+    var faltam = [], primeiro = null;
+    Array.prototype.forEach.call(document.querySelectorAll('fieldset[data-q]'), function (fs) {
+      var ok = !!fs.querySelector('input:checked');
+      fs.classList.toggle('faltando', !ok);
+      if (!ok) { faltam.push(fs.getAttribute('data-q')); if (!primeiro) primeiro = fs; }
+    });
+    if (primeiro) { var r = primeiro.querySelector('input:not([disabled])'); if (r) r.focus(); primeiro.scrollIntoView({ block: 'center' }); }
+    return faltam;
+  }
+  /** Barra fixa "n de N respondidos" nas rodadas com vários itens. */
+  function iniciarProgresso() {
+    var cartao = app.querySelector('.cartao');
+    var grupos = cartao ? cartao.querySelectorAll('fieldset[data-q]') : [];
+    if (!cartao || grupos.length < 2 || document.getElementById('confirmar')) return;
+    var barra = h('p', { class: 'progresso', role: 'status', 'aria-live': 'polite' });
+    function atualizar() {
+      var feitos = 0;
+      Array.prototype.forEach.call(grupos, function (fs) { if (fs.querySelector('input:checked')) { feitos++; fs.classList.remove('faltando'); } });
+      barra.textContent = feitos + ' de ' + grupos.length + ' respondidos' + (feitos === grupos.length ? ' · falta só enviar' : '');
+      barra.classList.toggle('completo', feitos === grupos.length);
+    }
+    cartao.addEventListener('change', atualizar);
+    cartao.appendChild(barra); atualizar();
+  }
+
   // ---------- telas por etapa ----------
   function desenhar(forcar) {
     var e = estado; if (!e) return;
@@ -269,7 +296,7 @@
           h('button', { class: 'botao secundario', type: 'button', text: 'Revisar', onclick: function () { confirmando = false; erroEnvio = null; desenhar(true); } })));
       else acoes = h('button', { class: 'botao bloco', type: 'button', text: 'Enviar resposta da equipe', onclick: function () {
         var p = f.pronto(); EL.limpar(msg);
-        if (p) { msg.appendChild(h('p', { class: 'aviso erro', text: p })); return; }
+        if (p) { var faltam = marcarFaltas(); msg.appendChild(h('p', { class: 'aviso erro', text: faltam.length ? p.replace(/\.$/, '') + ': faltam ' + (faltam.length === 1 ? 'o item ' : 'os itens ') + faltam.join(', ') + '.' : p })); return; }
         confirmando = true; desenhar(true); var b = document.getElementById('confirmar'); if (b) b.focus();
       } });
       nos.push(h('section', { class: 'cartao' }, rotulo, h('h1', { text: r.titulo }), h('p', { text: r.instrucao }), h('p', { class: 'regra', text: r.regraPontuacao }), f.nos, msg, acoes));
@@ -313,6 +340,7 @@
     } })));
     var rolagem = window.scrollY;
     moldura(nos);
+    iniciarProgresso();
     if (forcar) window.scrollTo(0, rolagem);
   }
 

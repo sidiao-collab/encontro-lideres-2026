@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
 // Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-13b",
+  "versao": "2026-11-24-retrospectiva",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
@@ -11,60 +11,61 @@ window.CONTINGENCIA_DADOS = {
     {
       "id": "p1",
       "tipo": "capa",
-      "titulo": "Encontro de Líderes 2026",
-      "texto": "Coordenadores e professores da UNIFASAM e da FACULDADE INTEGRA. Quarenta e cinco minutos, um celular por equipe."
+      "titulo": "Retrospectiva 2026: um ano de transformação, inovação e conquistas",
+      "texto": "Coordenadores e professores da UNIFASAM e da FACULDADE INTEGRA. Janeiro a novembro de 2026, um celular por equipe."
     },
     {
       "id": "p2",
       "tipo": "instituicao",
-      "instituicao": "unifasam",
-      "titulo": "UNIFASAM",
+      "instituicao": "ambas",
+      "titulo": "Cinco eixos de uma mesma trajetória",
       "pontos": [
-        "Nasce da Faculdade Sul-Americana (FASAM), idealizada pelo Prof. Paulo Gonçalves de Castro e credenciada em 2001.",
-        "Credenciada para EaD em 2020 e como Centro Universitário em 2021.",
-        "Em Goiânia, junto à BR-153: o Estatuto a define como polo irradiador de desenvolvimento local e regional.",
-        "Missão: fortalecer a sociedade, desenvolver a ciência, valorizar a cultura e formar cidadãos críticos e humanizados."
+        "Transformação educacional: novo marco regulatório, EaD reorganizada, modelo semipresencial e modelo de avaliação modernizado.",
+        "Expansão da infraestrutura: retrofit da UNIFASAM, Bloco 2 da Faculdade Integra e novas clínicas.",
+        "Excelência acadêmica: corpo docente fortalecido e avaliações externas ao longo do ano.",
+        "Crescimento institucional: Medicina, base discente conjunta superior a 2 mil estudantes, estágios e parcerias.",
+        "Inovação na gestão: novo modelo de gestão e tecnologias próprias, incluindo o IntegraLog."
       ],
-      "referencia": "PDI UNIFASAM 2026–2030, seções 1.3 a 1.6, pp. 16–20."
+      "referencia": "Retrospectiva 2026, slide 2"
     },
     {
       "id": "p3",
       "tipo": "instituicao",
-      "instituicao": "integra",
-      "titulo": "FACULDADE INTEGRA",
+      "instituicao": "ambas",
+      "titulo": "2026 em números",
       "pontos": [
-        "Origem em 2014, em Caldas Novas, a partir do convite de Ari Schmidt ao Prof. Paulo Gonçalves de Castro e seus filhos.",
-        "Sustentabilidade em quatro dimensões desde o projeto: econômica, social, ambiental e cultural.",
-        "Inserida no Vale do Meia Ponte, sul goiano, para formar e reter os jovens da região.",
-        "O nome carrega três significados: FORMA, COMPLETA e APROXIMA."
+        "52 ingressantes no primeiro vestibular de Medicina.",
+        "Mais de 2 mil estudantes na base discente conjunta.",
+        "4,86: resultado avaliativo do Curso Técnico em Saúde Bucal no CEE-GO.",
+        "66 atividades na agenda da UNIFASAM e 88 eventos com participação da Faculdade Integra."
       ],
-      "referencia": "PDI INTEGRA 2026–2030, seções 1.2 a 1.5, pp. 29–30 (paginação do LibreOffice)."
+      "referencia": "Retrospectiva 2026, slides 3 e 12 e 13"
     },
     {
       "id": "p4",
       "tipo": "marcos",
-      "titulo": "2026: o que está documentado",
+      "titulo": "Marcos de 2026 por instituição",
       "marcos": [
         {
           "instituicao": "integra",
           "situacao": "documentado",
-          "fato": "Em 1º de junho de 2026, o CONSUP aprovou o PDI 2026–2030 (Resolução CONSUP nº 001/2026).",
-          "importancia": "As metas de cada curso para os próximos cinco anos passam a ter base formal para cobrança e acompanhamento.",
-          "referencia": "PDI INTEGRA, folha de rosto, p. 2."
+          "fato": "Fevereiro: inauguração do Bloco 2. Abril: Medicina autorizada. Julho: primeiro vestibular, com 52 ingressantes. Agosto: início da primeira turma e inauguração da Clínica Veterinária.",
+          "importancia": "Mostra a expansão física e acadêmica da Faculdade Integra em um único ano.",
+          "referencia": "Retrospectiva 2026, slides 5 e 6 e 8"
         },
         {
           "instituicao": "unifasam",
           "situacao": "documentado",
-          "fato": "O PDI 2026–2030 (versão 1.0) registra o CONSUP como órgão de aprovação, no exercício de 2026.",
-          "importancia": "Com a autonomia de Centro Universitário, é o PDI que orienta decisões de curso antes dependentes de autorização prévia.",
-          "referencia": "PDI UNIFASAM, ficha técnica, p. 3; seção 1.3, p. 17."
+          "fato": "Retrofit da infraestrutura, Prêmio IEL em setembro (IES destaque e inovadora na gestão dos estágios) e resultados de avaliação externa em 2026 nos cursos de Sistemas de Informação, Ciência da Computação (EaD), Nutrição, Biomedicina EaD, Administração EaD e Ciências Contábeis EaD.",
+          "importancia": "Reúne avaliação externa, destaque na gestão dos estágios e renovação do espaço e da comunicação da UNIFASAM. Resultados de avaliação não substituem o ato oficial de reconhecimento.",
+          "referencia": "Retrospectiva 2026, slides 7 e 8 e 9"
         },
         {
-          "instituicao": "unifasam",
-          "situacao": "previsto",
-          "fato": "O credenciamento presencial tem validade até 03/11/2026; o PDI trata o recredenciamento como evento central do início do ciclo.",
-          "importancia": "É um marco previsto, não um resultado: o desfecho só entra no painel com o ato publicado.",
-          "referencia": "PDI UNIFASAM, seções 2.5 e 2.6, pp. 39–40."
+          "instituicao": "ambas",
+          "situacao": "documentado",
+          "fato": "Novo modelo de gestão, com reuniões semanais entre os gestores, equipes mais integradas e tecnologias próprias de gestão, incluindo o IntegraLog.",
+          "importancia": "É o tema transversal de janeiro a novembro e orienta o caso de decisão da rodada 3.",
+          "referencia": "Retrospectiva 2026, slides 11 e 14"
         }
       ]
     }
@@ -74,63 +75,59 @@ window.CONTINGENCIA_DADOS = {
       "id": "r1",
       "tipo": "associacao",
       "titulo": "Quem fez o quê?",
-      "instrucao": "Para cada enunciado, a equipe indica: UNIFASAM, FACULDADE INTEGRA ou Ambas. Marquem “Ambas” apenas quando o fato constar nos dois PDIs. Usem a Carta Dobro no enunciado em que mais confiam.",
+      "instrucao": "Para cada enunciado, a equipe indica: UNIFASAM, FACULDADE INTEGRA ou Ambas. Marquem “Ambas” apenas quando o material atribuir o fato às duas. Usem a Carta Dobro no enunciado em que mais confiam.",
       "regraPontuacao": "20 pontos por enunciado correto (100 na rodada). Carta Dobro: o enunciado escolhido vale 40 se estiver certo.",
       "duracaoMin": 8,
       "itens": [
         {
-          "id": "A-06",
-          "enunciado": "Ao mudar de organização acadêmica, ganhou autonomia para criar, organizar e extinguir cursos na sede sem autorização prévia."
-        },
-        {
-          "id": "A-04",
-          "enunciado": "Em 2024, inaugurou dentro do Fórum da cidade, em parceria com o Tribunal de Justiça de Goiás, o Núcleo de Práticas Jurídicas e o Programa Mais Vida."
+          "id": "A-03",
+          "enunciado": "Teve o curso de Biomedicina EaD avaliado com resultado 5, em agosto."
         },
         {
           "id": "A-08",
-          "enunciado": "Oferece Mestrado Acadêmico em Educação em parceria com a Universidade de Santa Cruz do Sul."
+          "enunciado": "Teve o curso de Medicina autorizado em abril de 2026."
         },
         {
-          "id": "A-10",
-          "enunciado": "O PDI destina no mínimo 10% da carga horária dos cursos de graduação a atividades de extensão integradas ao currículo."
+          "id": "A-09",
+          "enunciado": "Concluiu, em julho, o primeiro vestibular de Medicina, com 52 ingressantes."
         },
         {
-          "id": "A-05",
-          "enunciado": "Lista “Verdade e Transparência” entre seus valores institucionais, como base da política de comunicação e da Ouvidoria."
+          "id": "A-15",
+          "enunciado": "Participou do ciclo de avaliações externas de 2026, que começou em abril e teve resultados entre 3 e 5."
+        },
+        {
+          "id": "A-02",
+          "enunciado": "Foi destaque no Prêmio IEL, em setembro, como instituição de ensino superior inovadora na gestão dos estágios."
         }
       ]
     },
     {
       "id": "r2",
       "tipo": "ordenacao",
-      "titulo": "Linha do tempo institucional: de 2001 a 2026",
-      "instrucao": "Ordenem os acontecimentos do mais antigo (no topo) ao mais recente, usando os botões Subir e Descer. Usem a Carta Dobro no acontecimento cuja posição a equipe tem mais certeza.",
-      "regraPontuacao": "100 pontos divididos igualmente entre os acontecimentos; pontua cada um que estiver na posição correta (pontuação parcial). Carta Dobro: o acontecimento escolhido vale em dobro se estiver na posição certa.",
+      "titulo": "Linha do tempo de 2026",
+      "instrucao": "Ordenem os acontecimentos de 2026, do mais antigo ao mais recente, usando os botões Subir e Descer. Usem a Carta Dobro na posição em que mais confiam.",
+      "regraPontuacao": "20 pontos por acontecimento na posição certa (100 na rodada). Carta Dobro: o acontecimento escolhido vale 40 se estiver na posição certa.",
       "duracaoMin": 8,
       "itens": [
         {
-          "id": "T-06",
-          "texto": "Início do projeto estrutural da FACULDADE INTEGRA, depois dos estudos de viabilidade."
+          "id": "T-03",
+          "texto": "Início do processo seletivo de Medicina e atualização do PPC"
         },
         {
           "id": "T-02",
-          "texto": "Convite de Ari Schmidt dá origem ao projeto da FACULDADE INTEGRA em Caldas Novas."
+          "texto": "Autorização do curso de Medicina da Faculdade Integra"
         },
         {
           "id": "T-08",
-          "texto": "FACULDADE INTEGRA inaugura o Núcleo de Práticas Jurídicas no Fórum de Caldas Novas."
+          "texto": "Resultados dos cursos EaD de Administração e Ciências Contábeis da UNIFASAM"
+        },
+        {
+          "id": "T-05",
+          "texto": "Primeiro vestibular de Medicina concluído, com 52 ingressantes"
         },
         {
           "id": "T-04",
-          "texto": "Credenciamento como Centro Universitário."
-        },
-        {
-          "id": "T-03",
-          "texto": "Credenciamento da instituição de Goiânia para a oferta de educação a distância."
-        },
-        {
-          "id": "T-07",
-          "texto": "Recredenciamento da instituição de Goiânia, ainda como faculdade."
+          "texto": "Arquitetura da Faculdade Integra obtém resultado 5 na avaliação externa"
         }
       ]
     },
@@ -138,28 +135,28 @@ window.CONTINGENCIA_DADOS = {
       "id": "r3",
       "tipo": "decisao",
       "titulo": "Desafio de decisão",
-      "instrucao": "Leiam o caso, escolham uma das quatro ações e escrevam uma justificativa curta. A justificativa não vale pontos: ela será usada na conversa.",
-      "regraPontuacao": "100 pontos para a ação que atende aos três elementos do critério; 70 para a que atende a dois; 40 para a que atende a um; 0 para a que não atende a nenhum. Nesta rodada não há Carta Dobro.",
+      "instrucao": "Leiam o caso hipotético, escolham uma ação e escrevam uma justificativa curta com base no critério indicado.",
+      "regraPontuacao": "A ação que atende aos três elementos do critério vale 100 pontos; as demais valem 60, 30 ou 0. A justificativa não vale pontos, mas será comentada. Nesta rodada não há Carta Dobro.",
       "duracaoMin": 8,
-      "caso": "Caso hipotético. Você coordena um curso de graduação. A participação dos estudantes do seu curso na autoavaliação conduzida pela CPA caiu pela metade em um ano. Nos corredores, eles dizem que respondem e “nada muda”.",
-      "pergunta": "Qual deve ser a sua primeira ação?",
-      "criterio": "Critério de pontuação: vale mais a ação que (1) investiga a causa antes de mudar, (2) passa pelo NDE ou colegiado do curso e (3) devolve aos estudantes o que foi decidido.",
+      "caso": "Caso hipotético. Com a primeira turma de Medicina iniciada em agosto e os campos de estágio ampliados em setembro, a demanda por campos de prática cresce, e os campos disponíveis ainda não cobrem todos os cursos nos mesmos períodos.",
+      "pergunta": "Qual ação a gestão deve priorizar?",
+      "criterio": "Critério de pontuação: vale mais a ação que (1) se apoia em dados ou na rotina de gestão que já existe, (2) envolve quem produz ou usa a informação e (3) define o próximo passo com prazo ou verificação.",
       "opcoes": [
         {
           "id": "a",
-          "texto": "Reunir os líderes de turma para ouvir os motivos da baixa adesão e registrar o que disserem."
+          "texto": "Ampliar o número de estudantes por turno de prática nos campos atuais, sem consultar os parceiros."
         },
         {
           "id": "b",
-          "texto": "Vincular a participação na autoavaliação a horas de atividades complementares, para garantir a adesão."
+          "texto": "Distribuir os campos por ordem de chegada dos pedidos das coordenações."
         },
         {
           "id": "c",
-          "texto": "Analisar com o NDE os relatórios anteriores, identificar por que as demandas não foram atendidas e executar duas melhorias neste semestre."
+          "texto": "Levantar a demanda por curso e período, priorizar as parcerias já fortalecidas e formalizar novos campos, com cronograma, antes do início das práticas."
         },
         {
           "id": "d",
-          "texto": "Levantar com representantes discentes o que foi pedido nas últimas avaliações, definir no colegiado o que será atendido e divulgar às turmas o que mudou e o que não mudará, com os motivos, antes do próximo ciclo."
+          "texto": "Negociar com os parceiros caso a caso, quando cada coordenação apresentar a necessidade."
         }
       ]
     },
@@ -167,163 +164,117 @@ window.CONTINGENCIA_DADOS = {
       "id": "r4",
       "tipo": "quiz",
       "titulo": "Quiz final",
-      "instrucao": "Respondam às seis questões e enviem tudo de uma vez. Cada questão tem uma única resposta correta. A equipe pode usar a Ajuda 50:50 em uma questão e a Carta Dobro em uma questão.",
-      "regraPontuacao": "100 pontos divididos igualmente entre as questões. Carta Dobro: a questão escolhida vale em dobro se estiver certa. Ajuda 50:50: uma vez, elimina duas alternativas erradas de uma questão.",
+      "instrucao": "Respondam às cinco questões sobre a retrospectiva. Cada equipe tem uma única Ajuda 50:50, que elimina duas alternativas erradas de uma questão. Usem a Carta Dobro na questão em que mais confiam.",
+      "regraPontuacao": "20 pontos por questão correta (100 na rodada). Carta Dobro: a questão escolhida vale 40 se estiver certa.",
       "duracaoMin": 9,
       "questoes": [
         {
-          "id": "Q-05",
-          "enunciado": "A visão da UNIFASAM projeta a instituição como referência de ensino superior de qualidade em que âmbito?",
+          "id": "Q-03",
+          "enunciado": "Qual foi o resultado avaliativo do Curso Técnico em Saúde Bucal no CEE-GO?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "Na Região Metropolitana de Goiânia."
+              "texto": "3,86"
             },
             {
               "id": "b",
-              "texto": "No Vale do Meia Ponte."
+              "texto": "4,68"
             },
             {
               "id": "c",
-              "texto": "No Estado de Goiás."
+              "texto": "5,00"
             },
             {
               "id": "d",
-              "texto": "Na Região Centro-Oeste."
-            },
-            {
-              "id": "e",
-              "texto": "No Brasil."
-            }
-          ]
-        },
-        {
-          "id": "Q-06",
-          "enunciado": "Em 2021, que ato ampliou a autonomia da instituição de Goiânia para criar, organizar e extinguir cursos na sede?",
-          "opcoes": [
-            {
-              "id": "a",
-              "texto": "O recredenciamento institucional."
-            },
-            {
-              "id": "b",
-              "texto": "O credenciamento para a oferta de educação a distância."
-            },
-            {
-              "id": "c",
-              "texto": "O reconhecimento dos cursos da área da saúde."
-            },
-            {
-              "id": "d",
-              "texto": "O credenciamento como Centro Universitário."
-            },
-            {
-              "id": "e",
-              "texto": "A aprovação do PDI pelo Conselho Superior."
+              "texto": "4,86"
             }
           ]
         },
         {
           "id": "Q-04",
-          "enunciado": "Qual projeto da FACULDADE INTEGRA mobiliza todos os cursos para levar serviços à comunidade de Caldas Novas, com cerca de cinco mil pessoas beneficiadas por ano?",
+          "enunciado": "A base discente conjunta de UNIFASAM e Faculdade Integra superou qual marca em agosto?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "Programa Sorriso Para Todos."
+              "texto": "1 mil estudantes"
             },
             {
               "id": "b",
-              "texto": "Semana de Conciliação Integra."
+              "texto": "2 mil estudantes"
             },
             {
               "id": "c",
-              "texto": "UNATI – Universidade Aberta à Terceira Idade."
+              "texto": "1,5 mil estudantes"
             },
             {
               "id": "d",
-              "texto": "Integra em Ação."
-            },
-            {
-              "id": "e",
-              "texto": "Fórum de Mobilidade Urbana."
+              "texto": "3 mil estudantes"
             }
           ]
         },
         {
-          "id": "Q-11",
-          "enunciado": "No brasão da FACULDADE INTEGRA, o que significa o sobrenome Castro?",
+          "id": "Q-05",
+          "enunciado": "Em que mês foi inaugurado o Bloco 2 da Faculdade Integra?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "Paz."
+              "texto": "Janeiro"
             },
             {
               "id": "b",
-              "texto": "Fecundidade."
+              "texto": "Abril"
             },
             {
               "id": "c",
-              "texto": "Sabedoria."
+              "texto": "Agosto"
             },
             {
               "id": "d",
-              "texto": "Fortaleza."
-            },
-            {
-              "id": "e",
-              "texto": "Vitória."
+              "texto": "Fevereiro"
             }
           ]
         },
         {
-          "id": "Q-12",
-          "enunciado": "A FACULDADE INTEGRA mantém, desde o projeto, o foco na sustentabilidade em quatro dimensões: econômica, social, ambiental e qual outra?",
+          "id": "Q-06",
+          "enunciado": "Qual prêmio destacou a UNIFASAM, em setembro, como IES inovadora na gestão dos estágios?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "Tecnológica."
+              "texto": "Prêmio IEL"
             },
             {
               "id": "b",
-              "texto": "Cultural."
+              "texto": "Prêmio Educa Brasil"
             },
             {
               "id": "c",
-              "texto": "Política."
+              "texto": "Selo Gestão Universitária"
             },
             {
               "id": "d",
-              "texto": "Territorial."
-            },
-            {
-              "id": "e",
-              "texto": "Educacional."
+              "texto": "Troféu Calourada"
             }
           ]
         },
         {
-          "id": "Q-03",
-          "enunciado": "Segundo o PDI da UNIFASAM, qual é a natureza da Comissão Própria de Avaliação (CPA)?",
+          "id": "Q-02",
+          "enunciado": "Em que mês teve início a primeira turma de Medicina?",
           "opcoes": [
             {
               "id": "a",
-              "texto": "Executiva: a CPA decide e implementa as melhorias que identifica."
+              "texto": "Agosto"
             },
             {
               "id": "b",
-              "texto": "Avaliativa e de assessoramento: a CPA avalia e recomenda; decidir e implementar cabe aos órgãos de gestão."
+              "texto": "Maio"
             },
             {
               "id": "c",
-              "texto": "Fiscalizadora: a CPA representa o INEP dentro da instituição."
+              "texto": "Junho"
             },
             {
               "id": "d",
-              "texto": "Consultiva apenas para a Reitoria, sem participação de estudantes."
-            },
-            {
-              "id": "e",
-              "texto": "Deliberativa: as recomendações da CPA têm força de resolução do Conselho Superior."
+              "texto": "Setembro"
             }
           ]
         }
@@ -331,11 +282,11 @@ window.CONTINGENCIA_DADOS = {
     }
   ],
   "desempate": {
-    "pergunta": "Desempate: segundo o PDI, quantas bolsas de estudo a FACULDADE INTEGRA concedeu em 2024?",
-    "instrucao": "Digitem um número inteiro. Fica à frente a equipe que chegar mais perto."
+    "pergunta": "Quantas atividades e eventos, somando a agenda da UNIFASAM e os eventos da Faculdade Integra, a retrospectiva registra em 2026?",
+    "instrucao": "Digite um número inteiro. Vence o palpite mais próximo da resposta."
   },
   "fechamento": {
-    "pergunta": "Que prática da outra instituição você gostaria de experimentar no seu curso?",
-    "apoio": "Conversem por um minuto com quem está ao lado. Depois, ouviremos duas ou três vozes."
+    "pergunta": "Qual prática de 2026 da outra instituição sua equipe levaria para o seu curso ou setor?",
+    "apoio": "Conversem em dupla por dois minutos e compartilhem uma prática com o grupo."
   }
 };

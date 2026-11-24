@@ -43,14 +43,14 @@
     var s = e.slides[e.slide];
     if (s.tipo === 'capa') return h('div', { class: 'capa' },
       h('div', null, h('p', { class: 'rotulo-etapa', text: 'UNIFASAM e FACULDADE INTEGRA' }), h('h1', { text: s.titulo }), h('p', { text: s.texto }),
-        EL.cfg.marcasProvisorias ? h('p', { class: 'provisoria', style: 'font-size:.5em', text: 'Aplicação provisória das marcas, sujeita à aprovação da Comunicação.' }) : null,
+        EL.cfg.marcasProvisorias ? h('p', { class: 'provisoria', style: 'font-size:.7em', text: 'Aplicação provisória das marcas, sujeita à aprovação da Comunicação.' }) : null,
         h('p', { class: 'contador', role: 'status', text: e.totalEquipes ? 'Equipes na sala: ' + e.totalEquipes : 'Aponte a câmera para o QR code ou digite o código.' }),
         h('ul', { class: 'chips', 'aria-label': 'Equipes que já entraram' }, e.equipes.map(function (n) { return h('li', { text: n }); }))),
       entrada(e));
-    if (s.tipo === 'instituicao') return [h('p', null, EL.etiqueta(s.instituicao)), h('h1', { text: s.titulo }), h('ul', { class: 'pontos-slide' }, s.pontos.map(function (p) { return h('li', { text: p }); })), h('p', { class: 'referencia', style: 'margin-top:1.2em;font-size:.6em', text: 'Fonte: ' + s.referencia })];
+    if (s.tipo === 'instituicao') return [h('p', null, EL.etiqueta(s.instituicao)), h('h1', { text: s.titulo }), h('ul', { class: 'pontos-slide' }, s.pontos.map(function (p) { return h('li', { text: p }); })), h('p', { class: 'referencia', style: 'margin-top:1.2em;font-size:.72em', text: 'Fonte: ' + s.referencia })];
     return [h('h1', { text: s.titulo }), h('div', null, s.marcos.map(function (m) {
       return h('div', { class: 'marco' }, h('div', null, EL.etiqueta(m.instituicao), h('br'), h('span', { class: 'selo ' + (m.situacao === 'documentado' ? 'certo' : 'neutro'), style: 'margin-top:.4em', text: m.situacao === 'documentado' ? '✓ Documentado' : 'Previsto — aguarda evidência' })),
-        h('div', null, h('p', { text: m.fato }), h('p', { class: 'porque', text: 'Por que importa: ' + m.importancia }), h('p', { class: 'referencia', style: 'font-size:.55em', text: m.referencia })));
+        h('div', null, h('p', { text: m.fato }), h('p', { class: 'porque', text: 'Por que importa: ' + m.importancia }), h('p', { class: 'referencia', style: 'font-size:.72em', text: m.referencia })));
     }))];
   }
 
@@ -69,18 +69,18 @@
     var r = e.rodada, dv = e.devolutiva, k = e.item || 0;
     if (r.tipo === 'associacao') { var it = r.itens[k], g = dv.itens[k];
       return [h('p', { class: 'rotulo-etapa', text: 'Devolutiva · item ' + (k + 1) + ' de ' + r.itens.length }), h('h2', { text: it.enunciado }),
-        h('p', null, 'Resposta: ', EL.etiqueta(g.gabarito)), h('p', { text: g.comentario }), acertos(g), h('p', { class: 'referencia', style: 'font-size:.6em', text: 'Fonte: ' + g.referencia })]; }
+        h('p', null, 'Resposta: ', EL.etiqueta(g.gabarito)), h('p', { text: g.comentario }), acertos(g), h('p', { class: 'referencia', style: 'font-size:.72em', text: 'Fonte: ' + g.referencia })]; }
     if (r.tipo === 'ordenacao') return [h('p', { class: 'rotulo-etapa', text: 'Devolutiva · ordem correta' }),
-      h('ol', { class: 'linha-tempo' }, dv.itens.map(function (g) { return h('li', null, h('span', { class: 'ano', text: g.ano }), EL.etiqueta(g.instituicao), h('span', null, g.texto, h('span', { class: 'referencia', style: 'display:block;font-size:.72em', text: g.detalhe + ' ' + g.referencia }))); })),
+      h('ol', { class: 'linha-tempo' }, dv.itens.map(function (g) { return h('li', null, h('span', { class: 'ano', text: g.ano }), g.instituicao ? EL.etiqueta(g.instituicao) : h('span'), h('span', null, g.texto, h('span', { class: 'referencia', style: 'display:block;font-size:.72em', text: g.detalhe + ' ' + g.referencia }))); })),
       h('p', { style: 'margin-top:1.2vh;font-size:.85em', text: dv.comentario })];
     if (r.tipo === 'decisao') return [h('p', { class: 'rotulo-etapa', text: 'Devolutiva · critério aplicado' }), h('p', { class: 'regra', style: 'font-size:.7em', text: r.criterio }),
       h('div', { class: 'duas-colunas' }, r.opcoes.map(function (o, i) { var g = dv.opcoes[i];
         return h('div', { class: 'caixa' + (g.pontos === 100 ? ' destaque' : '') }, h('p', null, h('strong', { text: o.id.toUpperCase() + ') ' + g.pontos + ' pontos' })), h('p', { text: o.texto }), h('p', null, h('em', { text: g.analise })), h('p', { class: 'referencia', text: g.escolhas + (g.escolhas === 1 ? ' equipe escolheu' : ' equipes escolheram') })); })),
-      h('p', { style: 'margin-top:1.2vh;font-size:.8em', text: dv.comentario }), h('p', { class: 'referencia', style: 'font-size:.55em', text: 'Fonte: ' + dv.referencia })];
+      h('p', { style: 'margin-top:1.2vh;font-size:.8em', text: dv.comentario }), h('p', { class: 'referencia', style: 'font-size:.72em', text: 'Fonte: ' + dv.referencia })];
     var q = r.questoes[k], gq = dv.questoes[k];
     return [h('p', { class: 'rotulo-etapa', text: 'Devolutiva · questão ' + (k + 1) + ' de ' + r.questoes.length }), h('h2', { text: q.enunciado }),
       h('ol', { type: 'A', style: 'font-size:.85em;display:grid;gap:.4em' }, q.opcoes.map(function (o) { return h('li', { style: o.id === gq.correta ? 'font-weight:700' : 'color:var(--tinta-2)' }, o.texto, o.id === gq.correta ? h('span', { class: 'selo certo', style: 'margin-left:.6em', text: '✓ Resposta correta' }) : null); })),
-      h('p', { style: 'font-size:.85em', text: gq.comentario }), acertos(gq), h('p', { class: 'referencia', style: 'font-size:.6em', text: 'Fonte: ' + gq.referencia })];
+      h('p', { style: 'font-size:.85em', text: gq.comentario }), acertos(gq), h('p', { class: 'referencia', style: 'font-size:.72em', text: 'Fonte: ' + gq.referencia })];
   }
 
   function seta(v) { return v === null || v === undefined ? h('span', { class: 'apoio', text: '—' }) : v > 0 ? h('span', { class: 'sobe', text: '▲ ' + v }) : v < 0 ? h('span', { class: 'desce', text: '▼ ' + (-v) }) : h('span', { class: 'apoio', text: '= manteve' }); }
@@ -91,7 +91,7 @@
       h('table', { class: 'placar' }, h('caption', { class: 'oculto-visual', text: 'Placar parcial das equipes' }),
         h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Posição' }), h('th', { scope: 'col', text: 'Equipe' }), h('th', { scope: 'col', class: 'n', text: 'Nesta rodada' }), h('th', { scope: 'col', class: 'n', text: 'Total' }), h('th', { scope: 'col', text: 'Movimento' }))),
         h('tbody', null, linhas.map(function (l) { return h('tr', null, h('td', { class: 'pos', text: EL.posicao(l.posicao) }), h('td', { text: l.nome }), h('td', { class: 'n', text: '+' + l.ganho }), h('td', { class: 'n' }, h('strong', { text: String(l.total) })), h('td', null, seta(l.variacao))); }))),
-      e.parcial.length > 10 ? h('p', { class: 'apoio', style: 'font-size:.6em;margin-top:1vh', text: 'Dez primeiras posições; cada equipe vê a sua no celular.' }) : null];
+      e.parcial.length > 10 ? h('p', { class: 'apoio', style: 'font-size:.72em;margin-top:1vh', text: 'Dez primeiras posições; cada equipe vê a sua no celular.' }) : null];
   }
   function telaDesempate(e) {
     var dz = e.desempate;
@@ -100,7 +100,7 @@
     return [h('p', { class: 'rotulo-etapa', text: 'Resultado do desempate' }), h('h1', { class: 'titulo-menor', text: dz.pergunta }),
       h('p', null, h('span', { class: 'pontos-grandes', text: String(dz.resposta) })), h('p', { style: 'font-size:.85em', text: dz.comentario }),
       h('ul', { class: 'chips' }, dz.palpites.map(function (x) { return h('li', { text: x.nome + ': ' + (x.palpite === null ? 'sem palpite' : x.palpite) }); })),
-      h('p', { class: 'referencia', style: 'font-size:.6em;margin-top:1vh', text: 'Fonte: ' + dz.referencia })];
+      h('p', { class: 'referencia', style: 'font-size:.72em;margin-top:1vh', text: 'Fonte: ' + dz.referencia })];
   }
   function telaPlacar(e) {
     if (e.desempate && (e.desempate.fase === 'aberta' || e.placar.length === 0)) return telaDesempate(e);
@@ -110,7 +110,7 @@
     return [h('h1', { class: e.placarCompleto ? null : 'titulo-menor', text: e.placarCompleto ? 'Placar final' : 'Placar final · revelando' }), h('table', { class: 'placar' }, h('caption', { class: 'oculto-visual', text: 'Classificação final das equipes' }),
       h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Posição' }), h('th', { scope: 'col', text: 'Equipe' }), e.rodadas.map(function (x, k) { return h('th', { scope: 'col', class: 'n', text: 'R' + (k + 1) }); }), h('th', { scope: 'col', class: 'n', text: 'Total' }), h('th', { scope: 'col', text: 'Selos' }))),
       h('tbody', null, linhas.map(function (l) { return h('tr', null, h('td', { class: 'pos', text: EL.posicao(l.posicao) }), h('td', { text: l.nome }), e.rodadas.map(function (x) { return h('td', { class: 'n', text: String(l.porRodada[x.id] || 0) }); }), h('td', { class: 'n' }, h('strong', { text: String(l.total) })), h('td', null, selos(l, e.nomesSelos))); }))),
-      h('p', { class: 'apoio', style: 'font-size:.6em;margin-top:1vh', text: (e.placarCompleto ? (e.placar.length > 10 ? 'Dez primeiras posições; cada equipe vê a sua no celular. ' : '') : 'Faltam ' + (e.placarTotal - e.placar.length) + ' de ' + e.placarTotal + '. ') + 'Equipes com a mesma pontuação dividem a posição.' })];
+      h('p', { class: 'apoio', style: 'font-size:.72em;margin-top:1vh', text: (e.placarCompleto ? (e.placar.length > 10 ? 'Dez primeiras posições; cada equipe vê a sua no celular. ' : '') : 'Faltam ' + (e.placarTotal - e.placar.length) + ' de ' + e.placarTotal + '. ') + 'Equipes com a mesma pontuação dividem a posição.' })];
   }
 
   function desenhar(forcar) {
