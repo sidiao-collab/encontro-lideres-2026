@@ -282,7 +282,7 @@ window.CONTINGENCIA_DADOS = {
     }
   ],
   "desempate": {
-    "pergunta": "Quantas atividades e eventos, somando a agenda da UNIFASAM e os eventos da Faculdade Integra, a retrospectiva registra em 2026?",
+    "pergunta": "Entre os 88 eventos com participação da Faculdade Integra em 2026, quantos foram esportivos?",
     "instrucao": "Digite um número inteiro. Vence o palpite mais próximo da resposta."
   },
   "fechamento": {
