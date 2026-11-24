@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
 // Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-24-retrospectiva",
+  "versao": "2026-11-24c-retrospectiva-mvv",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
@@ -56,7 +56,7 @@ window.CONTINGENCIA_DADOS = {
         {
           "instituicao": "unifasam",
           "situacao": "documentado",
-          "fato": "Retrofit da infraestrutura, Prêmio IEL em setembro (2º lugar, IES destaque e inovadora na gestão dos estágios), primeira turma do curso semipresencial de Fisioterapia em janeiro, Clínica-Escola de Fonoaudiologia em setembro e resultados de avaliação externa em 2026 nos cursos de Sistemas de Informação, Ciência da Computação (EaD), Nutrição, Biomedicina EaD, Administração EaD e Ciências Contábeis EaD.",
+          "fato": "Retrofit da infraestrutura, Prêmio IEL em setembro (2º lugar, categoria IES com práticas inovadoras, pela gestão dos estágios), primeira turma do curso semipresencial de Fisioterapia em janeiro, Clínica-Escola de Fonoaudiologia em setembro e resultados de avaliação externa em 2026 nos cursos de Sistemas de Informação, Ciência da Computação (EaD), Nutrição, Biomedicina EaD, Administração EaD e Ciências Contábeis EaD.",
           "importancia": "Reúne avaliação externa, destaque na gestão dos estágios e renovação do espaço e da comunicação da UNIFASAM. Resultados de avaliação não substituem o ato oficial de reconhecimento.",
           "referencia": "Retrospectiva 2026, slides 7 e 8 e 9"
         },
@@ -84,20 +84,20 @@ window.CONTINGENCIA_DADOS = {
           "enunciado": "Teve o curso de Biomedicina EaD avaliado com resultado 5, em agosto."
         },
         {
-          "id": "A-10",
-          "enunciado": "Teve o curso de Medicina autorizado em abril de 2026."
+          "id": "A-16",
+          "enunciado": "Inclui “Respeito à diversidade” entre os seus valores institucionais."
         },
         {
-          "id": "A-11",
-          "enunciado": "Concluiu, em julho, o primeiro vestibular de Medicina, com 52 ingressantes."
+          "id": "A-20",
+          "enunciado": "Inaugurou o Bloco 2 em fevereiro de 2026."
         },
         {
-          "id": "A-17",
-          "enunciado": "Participou do ciclo de avaliações externas de 2026, que começou em abril e teve resultados entre 3 e 5."
+          "id": "A-18",
+          "enunciado": "Inclui “Responsabilidade” entre os seus valores institucionais."
         },
         {
           "id": "A-02",
-          "enunciado": "Conquistou o 2º lugar no Prêmio IEL, em setembro, como instituição de ensino superior inovadora na gestão dos estágios."
+          "enunciado": "Conquistou o 2º lugar no Prêmio IEL, em setembro, na categoria IES com práticas inovadoras, pela gestão dos estágios."
         }
       ]
     },
@@ -236,7 +236,7 @@ window.CONTINGENCIA_DADOS = {
         },
         {
           "id": "Q-06",
-          "enunciado": "Qual prêmio destacou a UNIFASAM, em setembro, como IES inovadora na gestão dos estágios?",
+          "enunciado": "Qual prêmio destacou a UNIFASAM, em setembro, na categoria IES com práticas inovadoras, pela gestão dos estágios?",
           "opcoes": [
             {
               "id": "a",
