@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
 // Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-24d-retrospectiva-mvv-pdi",
+  "versao": "2026-11-24e-retrospectiva-mvv-pdi",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
