@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
 // Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-24e-retrospectiva-mvv-pdi",
+  "versao": "2026-11-26-carta-dobro",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
@@ -76,7 +76,7 @@ window.CONTINGENCIA_DADOS = {
       "tipo": "associacao",
       "titulo": "Quem fez o quê?",
       "instrucao": "Para cada enunciado, a equipe indica: UNIFASAM, FACULDADE INTEGRA ou Ambas. Marquem “Ambas” apenas quando o material atribuir o fato às duas. Usem a Carta Dobro no enunciado em que mais confiam.",
-      "regraPontuacao": "20 pontos por enunciado correto (100 na rodada). Carta Dobro: o enunciado escolhido vale 40 se estiver certo.",
+      "regraPontuacao": "20 pontos por enunciado correto (até 100). Carta Dobro: +20 se o enunciado escolhido estiver certo; o máximo da rodada é 120.",
       "duracaoMin": 8,
       "itens": [
         {
@@ -106,7 +106,7 @@ window.CONTINGENCIA_DADOS = {
       "tipo": "ordenacao",
       "titulo": "Linha do tempo de 2026",
       "instrucao": "Ordenem os acontecimentos de 2026, do mais antigo ao mais recente, usando os botões Subir e Descer. Usem a Carta Dobro na posição em que mais confiam.",
-      "regraPontuacao": "20 pontos por acontecimento na posição certa (100 na rodada). Carta Dobro: o acontecimento escolhido vale 40 se estiver na posição certa.",
+      "regraPontuacao": "20 pontos por acontecimento na posição certa (até 100). Carta Dobro: +20 se o acontecimento escolhido estiver na posição certa; o máximo da rodada é 120.",
       "duracaoMin": 8,
       "itens": [
         {
@@ -165,7 +165,7 @@ window.CONTINGENCIA_DADOS = {
       "tipo": "quiz",
       "titulo": "Quiz final",
       "instrucao": "Respondam às cinco questões sobre a retrospectiva. Cada equipe tem uma única Ajuda 50:50, que elimina duas alternativas erradas de uma questão. Usem a Carta Dobro na questão em que mais confiam.",
-      "regraPontuacao": "20 pontos por questão correta (100 na rodada). Carta Dobro: a questão escolhida vale 40 se estiver certa.",
+      "regraPontuacao": "20 pontos por questão correta (até 100). Carta Dobro: +20 se a questão escolhida estiver certa; o máximo da rodada é 120.",
       "duracaoMin": 9,
       "questoes": [
         {

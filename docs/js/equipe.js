@@ -79,8 +79,10 @@
     var ops = rotulos.map(function (x) { return { id: x.id, texto: x.texto }; }).concat([{ id: '__nao', texto: 'Não usar a Carta Dobro nesta rodada' }]);
     return h('div', { class: 'carta-dobro' },
       grupoRadio('dobro-' + r.id, [h('span', { class: 'selo dobro', text: '×2 Carta Dobro' }), ' Em qual item a equipe mais confia?'], ops, d.dobro === null ? '__nao' : d.dobro, function (v) { d.dobro = v === '__nao' ? null : v; salvarRascunho(); }),
-      h('p', { class: 'dica', text: 'Se o item escolhido estiver certo, ele vale em dobro. Se estiver errado, nada se perde.' }));
+      h('p', { class: 'dica', text: 'Se o item escolhido estiver certo, ele vale 40 em vez de 20 (+20 de bônus). Se estiver errado, nada se perde.' }));
   }
+  /** Início do texto do item, para a equipe reconhecer onde está pondo a Carta Dobro. */
+  function resumo(t) { t = String(t || ''); return t.length > 70 ? t.slice(0, 70).replace(/\s+\S*$/, '') + '…' : t; }
   function faltaDobro(d) { return d.dobro === undefined ? 'Escolham onde usar a Carta Dobro, ou marquem “Não usar”.' : null; }
   function comDobro(resposta, d) { if (d.dobro) resposta.dobro = d.dobro; return resposta; }
 
@@ -89,7 +91,7 @@
     var ops = [{ id: 'unifasam', texto: 'UNIFASAM' }, { id: 'integra', texto: 'FACULDADE INTEGRA' }, { id: 'ambas', texto: 'Ambas' }];
     return { nos: r.itens.map(function (it, k) {
       return grupoRadio('a-' + it.id, [h('span', { class: 'num', text: String(k + 1) }), it.enunciado], ops, d.itens[it.id], function (v) { d.itens[it.id] = v; salvarRascunho(); }, 'tres', k + 1);
-    }).concat(campoDobro(r, d, r.itens.map(function (it, k) { return { id: it.id, texto: 'Enunciado ' + (k + 1) }; }))),
+    }).concat(campoDobro(r, d, r.itens.map(function (it, k) { return { id: it.id, texto: (k + 1) + '. ' + resumo(it.enunciado) }; }))),
       pronto: function () { return r.itens.every(function (it) { return d.itens[it.id]; }) ? faltaDobro(d) : 'Marque uma opção em cada enunciado antes de enviar.'; },
       resposta: function () { return comDobro({ itens: d.itens }, d); } };
   }
@@ -149,7 +151,7 @@
         : h('button', { class: 'botao secundario', type: 'button', 'aria-label': '50:50 nesta questão ' + (k + 1), text: '50:50 nesta questão', onclick: function () { pedindoAjuda = q.id; desenhar(true); } })));
     });
     if (!aj && !estado.ajudaDisponivel) nos.push(h('p', { class: 'apoio', text: 'A Ajuda 50:50 da equipe já foi usada.' }));
-    nos.push(campoDobro(r, d, r.questoes.map(function (q, k) { return { id: q.id, texto: 'Questão ' + (k + 1) }; })));
+    nos.push(campoDobro(r, d, r.questoes.map(function (q, k) { return { id: q.id, texto: (k + 1) + '. ' + resumo(q.enunciado) }; })));
     return { nos: nos, pronto: function () { return r.questoes.every(function (q) { return d.respostas[q.id]; }) ? faltaDobro(d) : 'Responda a todas as questões antes de enviar.'; }, resposta: function () { return comDobro({ respostas: d.respostas }, d); } };
   }
   var FORMS = { associacao: formAssociacao, ordenacao: formOrdenacao, decisao: formDecisao, quiz: formQuiz };
@@ -280,7 +282,7 @@
         h('p', { class: 'aviso ok', role: 'status', text: '✓ Entrada confirmada. ' + e.totalEquipes + (e.totalEquipes === 1 ? ' equipe conectada.' : ' equipes conectadas.') }),
         h('p', { text: 'Acompanhem o painel na tela. A primeira rodada aparece aqui assim que o moderador abrir.' }),
         h('h2', { text: 'Recursos da equipe' }),
-        h('ul', null, h('li', null, h('strong', { text: 'Carta Dobro: ' }), 'uma por rodada; o item escolhido vale em dobro se estiver certo.'), h('li', null, h('strong', { text: 'Ajuda 50:50: ' }), 'uma no jogo, no quiz final; elimina duas alternativas erradas.'), h('li', null, h('strong', { text: 'Selos: ' }), 'para quem acerta tudo de uma instituição ou todos os itens “Ambas”.')),
+        h('ul', null, h('li', null, h('strong', { text: 'Carta Dobro: ' }), 'uma por rodada; se o item escolhido estiver certo, ele vale 40 em vez de 20 (+20 de bônus).'), h('li', null, h('strong', { text: 'Ajuda 50:50: ' }), 'uma no jogo, no quiz final; elimina duas alternativas erradas.'), h('li', null, h('strong', { text: 'Selos: ' }), 'para quem acerta tudo de uma instituição ou todos os itens “Ambas”.')),
         h('p', { class: 'apoio', text: 'Velocidade não conta pontos. Mantenham esta página aberta; se o celular bloquear, basta voltar a ela.' })));
     } else if (r && fase === 'preparo') {
       nos.push(h('section', { class: 'cartao' }, rotulo, h('h1', { text: r.titulo }), h('p', { text: r.instrucao }), h('p', { class: 'regra', text: r.regraPontuacao }),
@@ -310,7 +312,7 @@
       var eu = e.parcial ? e.parcial.filter(function (l) { return l.voce; })[0] : null;
       nos.push(h('section', { class: 'cartao' }, rotulo, h('h1', { text: r.titulo }),
         h('p', null, h('span', { class: 'pontos-grandes', text: String(minha.pontos || 0) }), ' pontos nesta rodada'),
-        r.cartaDobro && minha.enviada ? h('p', { class: 'apoio', text: minha.bonus ? minha.base + ' de 100, mais ' + minha.bonus + ' de bônus da Carta Dobro.' : minha.base + ' de 100. ' + (minha.resposta.dobro ? 'A Carta Dobro não rendeu bônus desta vez.' : 'A Carta Dobro não foi usada.') }) : null,
+        r.cartaDobro && minha.enviada ? h('p', { class: 'apoio', text: minha.bonus ? minha.base + ' pelos acertos + ' + minha.bonus + ' da Carta Dobro = ' + minha.pontos + ' pontos.' : minha.base + ' pelos acertos. ' + (minha.resposta.dobro ? 'A Carta Dobro não rendeu bônus: o item escolhido não estava certo.' : 'A Carta Dobro não foi usada.') }) : null,
         minha.enviada ? null : h('p', { class: 'aviso atencao', text: 'Sua equipe não enviou resposta nesta rodada.' }),
         h('p', { class: 'apoio', text: 'Total acumulado: ' + e.meusPontos + ' pontos.' }),
         eu ? h('p', { class: 'aviso ok', role: 'status', text: 'Placar parcial: ' + EL.posicao(eu.posicao) + ' lugar' + (variacao(eu.variacao) ? ' (' + variacao(eu.variacao) + ')' : '') + '.' }) : null,

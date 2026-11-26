@@ -91,6 +91,7 @@
       h('table', { class: 'placar' }, h('caption', { class: 'oculto-visual', text: 'Placar parcial das equipes' }),
         h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Posição' }), h('th', { scope: 'col', text: 'Equipe' }), h('th', { scope: 'col', class: 'n', text: 'Nesta rodada' }), h('th', { scope: 'col', class: 'n', text: 'Total' }), h('th', { scope: 'col', text: 'Movimento' }))),
         h('tbody', null, linhas.map(function (l) { return h('tr', null, h('td', { class: 'pos', text: EL.posicao(l.posicao) }), h('td', { text: l.nome }), h('td', { class: 'n', text: '+' + l.ganho }), h('td', { class: 'n' }, h('strong', { text: String(l.total) })), h('td', null, seta(l.variacao))); }))),
+      e.parcial.some(function (l) { return l.ganho > 100; }) ? h('p', { class: 'apoio', style: 'font-size:.72em;margin-top:1vh', text: 'Valores acima de 100 na rodada incluem o bônus da Carta Dobro (+20).' }) : null,
       e.parcial.length > 10 ? h('p', { class: 'apoio', style: 'font-size:.72em;margin-top:1vh', text: 'Dez primeiras posições; cada equipe vê a sua no celular.' }) : null];
   }
   function telaDesempate(e) {
@@ -105,7 +106,7 @@
   function telaPlacar(e) {
     if (e.desempate && (e.desempate.fase === 'aberta' || e.placar.length === 0)) return telaDesempate(e);
     if (!e.placar.length) return [h('p', { class: 'rotulo-etapa', text: 'Placar final' }), h('h1', { text: 'Quem levou o Encontro de Líderes 2026?' }), h('p', { text: 'O placar será revelado do último ao primeiro lugar.' }),
-      h('p', { class: 'apoio', text: e.placarTotal + (e.placarTotal === 1 ? ' equipe' : ' equipes') + ' · até 100 pontos por rodada, mais os bônus da Carta Dobro' })];
+      h('p', { class: 'apoio', text: e.placarTotal + (e.placarTotal === 1 ? ' equipe' : ' equipes') + ' · até 100 pontos por rodada, mais até 20 de bônus da Carta Dobro' })];
     var linhas = e.placarCompleto ? e.placar.slice(0, 10) : e.placar.slice(0, 8);
     return [h('h1', { class: e.placarCompleto ? null : 'titulo-menor', text: e.placarCompleto ? 'Placar final' : 'Placar final · revelando' }), h('table', { class: 'placar' }, h('caption', { class: 'oculto-visual', text: 'Classificação final das equipes' }),
       h('thead', null, h('tr', null, h('th', { scope: 'col', text: 'Posição' }), h('th', { scope: 'col', text: 'Equipe' }), e.rodadas.map(function (x, k) { return h('th', { scope: 'col', class: 'n', text: 'R' + (k + 1) }); }), h('th', { scope: 'col', class: 'n', text: 'Total' }), h('th', { scope: 'col', text: 'Selos' }))),
