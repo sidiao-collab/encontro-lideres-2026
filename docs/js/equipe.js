@@ -68,37 +68,63 @@
   function salvarRascunho() { EL.guarda.gravar(CH_RASCUNHO, rascunhos); }
 
   // ---------- formulários por tipo ----------
-  function grupoRadio(nome, legenda, opcoes, valor, aoMudar, classe, numero) {
+  function grupoRadio(nome, legenda, opcoes, valor, aoMudar, classe, numero, extra) {
     return h('fieldset', { 'data-q': numero ? String(numero) : null }, h('legend', null, legenda),
       h('div', { class: 'opcoes ' + (classe || '') }, opcoes.map(function (o) {
         return h('label', { class: 'opcao' + (o.desativada ? ' eliminada' : '') }, h('input', { type: 'radio', name: nome, value: o.id, checked: valor === o.id, disabled: o.desativada, onchange: function () { aoMudar(o.id); } }), h('span', { text: o.texto }));
-      })));
-  }
-  /** Carta Dobro: escolha explícita de um item (ou "não usar"). d.dobro: undefined = ainda não escolheu; null = não usar. */
-  function campoDobro(r, d, rotulos) {
-    var ops = rotulos.map(function (x) { return { id: x.id, texto: x.texto }; }).concat([{ id: '__nao', texto: 'Não usar a Carta Dobro nesta rodada' }]);
-    return h('div', { class: 'carta-dobro' },
-      grupoRadio('dobro-' + r.id, [h('span', { class: 'selo dobro', text: '×2 Carta Dobro' }), ' Em qual item a equipe mais confia?'], ops, d.dobro === null ? '__nao' : d.dobro, function (v) { d.dobro = v === '__nao' ? null : v; salvarRascunho(); }),
-      h('p', { class: 'dica', text: 'Se o item escolhido estiver certo, ele vale 40 em vez de 20 (+20 de bônus). Se estiver errado, nada se perde.' }));
+      })), extra ? h('div', { class: 'linha-dobro' }, extra) : null);
   }
   /** Início do texto do item, para a equipe reconhecer onde está pondo a Carta Dobro. */
   function resumo(t) { t = String(t || ''); return t.length > 70 ? t.slice(0, 70).replace(/\s+\S*$/, '') + '…' : t; }
-  function faltaDobro(d) { return d.dobro === undefined ? 'Escolham onde usar a Carta Dobro, ou marquem “Não usar”.' : null; }
+
+  /* Carta Dobro: um botão ×2 em cada item. Só um fica ativo por rodada; tocar de novo desliga. É opcional.
+     d.dobro guarda o id do item escolhido ou null. rotulosDobro: id -> rótulo curto do item, para os avisos. */
+  var rotulosDobro = {};
+  function textoDobro(d) {
+    return d && d.dobro ? 'Carta Dobro no item ' + (rotulosDobro[d.dobro] || '') : 'Carta Dobro ainda não usada nesta rodada (é opcional).';
+  }
+  function rotuloBotaoDobro(ativo, compacto) { return ativo ? (compacto ? '×2 ✓' : '×2 Carta Dobro ✓') : '×2'; }
+  function botaoDobro(d, id, compacto) {
+    var ativo = d.dobro === id;
+    return h('button', { type: 'button', class: 'botao-dobro' + (ativo ? ' ativo' : ''), 'data-dobro': id, 'data-compacto': compacto ? '1' : null, 'aria-pressed': ativo ? 'true' : 'false',
+      'aria-label': 'Usar a Carta Dobro no item ' + (rotulosDobro[id] || ''), text: rotuloBotaoDobro(ativo, compacto),
+      onclick: function () { d.dobro = d.dobro === id ? null : id; salvarRascunho(); sincronizarDobro(d); } });
+  }
+  function sincronizarDobro(d) {
+    Array.prototype.forEach.call(app.querySelectorAll('.botao-dobro'), function (b) {
+      var ativo = b.getAttribute('data-dobro') === d.dobro;
+      b.classList.toggle('ativo', ativo); b.setAttribute('aria-pressed', ativo ? 'true' : 'false'); b.textContent = rotuloBotaoDobro(ativo, b.hasAttribute('data-compacto'));
+    });
+    var st = app.querySelector('.estado-dobro'); if (st) st.textContent = textoDobro(d);
+  }
+  function introDobro(d) {
+    return h('div', { class: 'carta-dobro' },
+      h('p', null, h('span', { class: 'selo dobro', text: '×2 Carta Dobro' }), ' Toque em “×2” no item em que a equipe mais confia. Se ele estiver certo, vale 40 em vez de 20 (+20). Só um item por rodada; é opcional.'),
+      h('p', { class: 'estado-dobro', role: 'status', text: textoDobro(d) }));
+  }
+  function prepararDobro(d, itens) {
+    if (d.dobro === undefined) d.dobro = null;
+    rotulosDobro = {};
+    itens.forEach(function (x) { rotulosDobro[x.id] = x.rotulo; });
+    if (d.dobro && !rotulosDobro[d.dobro]) d.dobro = null;
+  }
   function comDobro(resposta, d) { if (d.dobro) resposta.dobro = d.dobro; return resposta; }
 
   function formAssociacao(r) {
     var d = rascunho(r.id, { itens: {} });
+    prepararDobro(d, r.itens.map(function (it, k) { return { id: it.id, rotulo: (k + 1) + '. ' + resumo(it.enunciado) }; }));
     var ops = [{ id: 'unifasam', texto: 'UNIFASAM' }, { id: 'integra', texto: 'FACULDADE INTEGRA' }, { id: 'ambas', texto: 'Ambas' }];
-    return { nos: r.itens.map(function (it, k) {
-      return grupoRadio('a-' + it.id, [h('span', { class: 'num', text: String(k + 1) }), it.enunciado], ops, d.itens[it.id], function (v) { d.itens[it.id] = v; salvarRascunho(); }, 'tres', k + 1);
-    }).concat(campoDobro(r, d, r.itens.map(function (it, k) { return { id: it.id, texto: (k + 1) + '. ' + resumo(it.enunciado) }; }))),
-      pronto: function () { return r.itens.every(function (it) { return d.itens[it.id]; }) ? faltaDobro(d) : 'Marque uma opção em cada enunciado antes de enviar.'; },
+    return { nos: [introDobro(d)].concat(r.itens.map(function (it, k) {
+      return grupoRadio('a-' + it.id, [h('span', { class: 'num', text: String(k + 1) }), it.enunciado], ops, d.itens[it.id], function (v) { d.itens[it.id] = v; salvarRascunho(); }, 'tres', k + 1, botaoDobro(d, it.id));
+    })),
+      pronto: function () { return r.itens.every(function (it) { return d.itens[it.id]; }) ? null : 'Marque uma opção em cada enunciado antes de enviar.'; },
       resposta: function () { return comDobro({ itens: d.itens }, d); } };
   }
   function formOrdenacao(r) {
     var ids = r.itens.map(function (i) { return i.id; });
     var d = rascunho(r.id, { ordem: ids.slice() });
     if (d.ordem.length !== ids.length || !d.ordem.every(function (i) { return ids.indexOf(i) >= 0; })) d.ordem = ids.slice();
+    prepararDobro(d, r.itens.map(function (it) { return { id: it.id, rotulo: resumo(it.texto) }; }));
     var lista = h('ol', { class: 'ordenar', 'aria-label': 'Acontecimentos, do mais antigo ao mais recente' });
     var vivo = h('p', { class: 'oculto-visual', 'aria-live': 'polite' });
     function desenharLista(focoId, direcao) {
@@ -107,7 +133,7 @@
         var it = r.itens.filter(function (x) { return x.id === id; })[0];
         var subir = h('button', { class: 'botao secundario', type: 'button', disabled: k === 0, 'aria-label': 'Subir: ' + it.texto, 'data-id': id, 'data-dir': 'subir', text: '↑ Subir', onclick: function () { mover(k, -1, id, 'subir'); } });
         var descer = h('button', { class: 'botao secundario', type: 'button', disabled: k === d.ordem.length - 1, 'aria-label': 'Descer: ' + it.texto, 'data-id': id, 'data-dir': 'descer', text: '↓ Descer', onclick: function () { mover(k, 1, id, 'descer'); } });
-        lista.appendChild(h('li', null, h('span', { class: 'num', text: String(k + 1) }), h('span', { text: it.texto }), h('div', { class: 'mover' }, subir, descer)));
+        lista.appendChild(h('li', null, h('span', { class: 'num', text: String(k + 1) }), h('span', { text: it.texto }), h('div', { class: 'mover' }, subir, descer, botaoDobro(d, id, true))));
       });
       if (focoId) {
         var alvo = lista.querySelector('button[data-id="' + focoId + '"][data-dir="' + direcao + '"]:not([disabled])') || lista.querySelector('button[data-id="' + focoId + '"]:not([disabled])');
@@ -120,8 +146,8 @@
       desenharLista(id, direcao); vivo.textContent = 'Movido para a posição ' + (j + 1) + ' de ' + d.ordem.length + '.';
     }
     desenharLista();
-    return { nos: [h('p', { class: 'enunciado', text: 'Mais antigo no topo, mais recente embaixo.' }), lista, vivo, campoDobro(r, d, r.itens.map(function (it) { return { id: it.id, texto: it.texto }; }))],
-      pronto: function () { return faltaDobro(d); }, resposta: function () { return comDobro({ ordem: d.ordem }, d); } };
+    return { nos: [introDobro(d), h('p', { class: 'enunciado', text: 'Mais antigo no topo, mais recente embaixo.' }), lista, vivo],
+      pronto: function () { return null; }, resposta: function () { return comDobro({ ordem: d.ordem }, d); } };
   }
   function formDecisao(r) {
     var d = rascunho(r.id, { opcao: null, justificativa: '' });
@@ -136,23 +162,23 @@
   }
   function formQuiz(r) {
     var d = rascunho(r.id, { respostas: {} });
+    prepararDobro(d, r.questoes.map(function (q, k) { return { id: q.id, rotulo: (k + 1) + '. ' + resumo(q.enunciado) }; }));
     var aj = estado.ajuda;
     if (aj && aj.eliminadas.indexOf(d.respostas[aj.questao]) >= 0) { delete d.respostas[aj.questao]; salvarRascunho(); }
-    var nos = [];
+    var nos = [introDobro(d)];
     r.questoes.forEach(function (q, k) {
       var minha = aj && aj.questao === q.id;
       nos.push(grupoRadio('q-' + q.id, [h('span', { class: 'num', text: String(k + 1) }), q.enunciado], q.opcoes.map(function (o) {
         var fora = minha && aj.eliminadas.indexOf(o.id) >= 0;
         return { id: o.id, texto: o.id.toUpperCase() + ') ' + o.texto + (fora ? ' (eliminada pela Ajuda 50:50)' : ''), desativada: fora };
-      }), d.respostas[q.id], function (v) { d.respostas[q.id] = v; salvarRascunho(); }, '', k + 1));
+      }), d.respostas[q.id], function (v) { d.respostas[q.id] = v; salvarRascunho(); }, '', k + 1, botaoDobro(d, q.id)));
       if (minha) nos.push(h('p', { class: 'aviso ok', role: 'status', text: '✓ Ajuda 50:50 usada nesta questão: duas alternativas erradas foram eliminadas.' }));
       else if (!aj && estado.ajudaDisponivel) nos.push(h('p', { class: 'linha-ajuda' }, pedindoAjuda === q.id
         ? [h('button', { class: 'botao', type: 'button', disabled: enviando, text: 'Confirmar: usar a única Ajuda 50:50 aqui', onclick: function () { usarAjuda(q.id); } }), ' ', h('button', { class: 'botao secundario', type: 'button', text: 'Cancelar', onclick: function () { pedindoAjuda = null; desenhar(true); } })]
         : h('button', { class: 'botao secundario', type: 'button', 'aria-label': '50:50 nesta questão ' + (k + 1), text: '50:50 nesta questão', onclick: function () { pedindoAjuda = q.id; desenhar(true); } })));
     });
     if (!aj && !estado.ajudaDisponivel) nos.push(h('p', { class: 'apoio', text: 'A Ajuda 50:50 da equipe já foi usada.' }));
-    nos.push(campoDobro(r, d, r.questoes.map(function (q, k) { return { id: q.id, texto: (k + 1) + '. ' + resumo(q.enunciado) }; })));
-    return { nos: nos, pronto: function () { return r.questoes.every(function (q) { return d.respostas[q.id]; }) ? faltaDobro(d) : 'Responda a todas as questões antes de enviar.'; }, resposta: function () { return comDobro({ respostas: d.respostas }, d); } };
+    return { nos: nos, pronto: function () { return r.questoes.every(function (q) { return d.respostas[q.id]; }) ? null : 'Responda a todas as questões antes de enviar.'; }, resposta: function () { return comDobro({ respostas: d.respostas }, d); } };
   }
   var FORMS = { associacao: formAssociacao, ordenacao: formOrdenacao, decisao: formDecisao, quiz: formQuiz };
 
@@ -282,7 +308,7 @@
         h('p', { class: 'aviso ok', role: 'status', text: '✓ Entrada confirmada. ' + e.totalEquipes + (e.totalEquipes === 1 ? ' equipe conectada.' : ' equipes conectadas.') }),
         h('p', { text: 'Acompanhem o painel na tela. A primeira rodada aparece aqui assim que o moderador abrir.' }),
         h('h2', { text: 'Recursos da equipe' }),
-        h('ul', null, h('li', null, h('strong', { text: 'Carta Dobro: ' }), 'uma por rodada; se o item escolhido estiver certo, ele vale 40 em vez de 20 (+20 de bônus).'), h('li', null, h('strong', { text: 'Ajuda 50:50: ' }), 'uma no jogo, no quiz final; elimina duas alternativas erradas.'), h('li', null, h('strong', { text: 'Selos: ' }), 'para quem acerta tudo de uma instituição ou todos os itens “Ambas”.')),
+        h('ul', null, h('li', null, h('strong', { text: 'Carta Dobro: ' }), 'uma por rodada e opcional: toquem em “×2” no item em que mais confiam; se ele estiver certo, vale 40 em vez de 20 (+20 de bônus).'), h('li', null, h('strong', { text: 'Ajuda 50:50: ' }), 'uma no jogo, no quiz final; elimina duas alternativas erradas.'), h('li', null, h('strong', { text: 'Selos: ' }), 'para quem acerta tudo de uma instituição ou todos os itens “Ambas”.')),
         h('p', { class: 'apoio', text: 'Velocidade não conta pontos. Mantenham esta página aberta; se o celular bloquear, basta voltar a ela.' })));
     } else if (r && fase === 'preparo') {
       nos.push(h('section', { class: 'cartao' }, rotulo, h('h1', { text: r.titulo }), h('p', { text: r.instrucao }), h('p', { class: 'regra', text: r.regraPontuacao }),
@@ -294,6 +320,7 @@
       var acoes;
       if (enviando) acoes = h('button', { class: 'botao bloco', type: 'button', disabled: true, text: 'Enviando…' });
       else if (confirmando) acoes = h('div', null, h('p', { class: 'aviso atencao', text: 'Depois de enviar, a resposta da equipe não pode ser alterada.' }),
+        r.cartaDobro ? h('p', { class: 'estado-dobro', text: textoDobro(rascunhos[r.id]) }) : null,
         h('div', { class: 'linha-botoes' }, h('button', { class: 'botao', type: 'button', id: 'confirmar', text: erroEnvio ? 'Tentar de novo' : 'Confirmar envio', onclick: function () { enviar(r, f.resposta()); } }),
           h('button', { class: 'botao secundario', type: 'button', text: 'Revisar', onclick: function () { confirmando = false; erroEnvio = null; desenhar(true); } })));
       else acoes = h('button', { class: 'botao bloco', type: 'button', text: 'Enviar resposta da equipe', onclick: function () {
