@@ -1,7 +1,7 @@
 // Arquivo gerado por scripts/gerar-contingencia.js — não editar à mão.
 // Contém apenas enunciados; o gabarito fica no material impresso do moderador.
 window.CONTINGENCIA_DADOS = {
-  "versao": "2026-11-26-carta-dobro",
+  "versao": "2026-11-26b-como-jogar",
   "evento": {
     "titulo": "Encontro de Líderes 2026",
     "subtitulo": "UNIFASAM e FACULDADE INTEGRA",
@@ -13,6 +13,19 @@ window.CONTINGENCIA_DADOS = {
       "tipo": "capa",
       "titulo": "Retrospectiva 2026: um ano de transformação, inovação e conquistas",
       "texto": "Coordenadores e professores da UNIFASAM e da FACULDADE INTEGRA. Janeiro a novembro de 2026, um celular por equipe."
+    },
+    {
+      "id": "p-regras",
+      "tipo": "instituicao",
+      "titulo": "Como jogar",
+      "pontos": [
+        "Um celular por equipe. Discutam, cheguem a um consenso e enviem uma resposta por rodada.",
+        "Quatro rodadas: Quem fez o quê?, Linha do tempo de 2026, Desafio de decisão e Quiz final.",
+        "20 pontos por item certo, até 100 por rodada. No desafio de decisão, a ação escolhida vale 100, 60, 30 ou 0.",
+        "Carta Dobro: toquem em “×2” no item em que mais confiam. Se ele estiver certo, vale 40 em vez de 20 (+20). Uma por rodada, opcional.",
+        "Ajuda 50:50: uma no jogo, no quiz final; elimina duas alternativas erradas de uma questão.",
+        "Velocidade não conta. O placar final é revelado do último ao primeiro lugar."
+      ]
     },
     {
       "id": "p2",

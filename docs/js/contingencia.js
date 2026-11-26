@@ -30,7 +30,7 @@
 
   function corpoSlide(s) {
     if (s.tipo === 'capa') return [h('p', { class: 'rotulo-etapa', text: 'UNIFASAM e FACULDADE INTEGRA' }), h('h1', { text: s.titulo }), h('p', { text: 'Modo de contingência: as equipes respondem em papel e o moderador registra os pontos.' })];
-    if (s.tipo === 'instituicao') return [h('p', null, EL.etiqueta(s.instituicao)), h('h1', { text: s.titulo }), h('ul', { class: 'pontos-slide' }, s.pontos.map(function (p) { return h('li', { text: p }); })), h('p', { class: 'referencia', style: 'margin-top:1.2em;font-size:.6em', text: 'Fonte: ' + s.referencia })];
+    if (s.tipo === 'instituicao') return [s.instituicao ? h('p', null, EL.etiqueta(s.instituicao)) : h('p', { class: 'rotulo-etapa', text: 'Antes de começar' }), h('h1', { text: s.titulo }), h('ul', { class: 'pontos-slide' }, s.pontos.map(function (p) { return h('li', { text: p }); })), s.referencia ? h('p', { class: 'referencia', style: 'margin-top:1.2em;font-size:.6em', text: 'Fonte: ' + s.referencia }) : null];
     return [h('h1', { text: s.titulo }), h('div', null, s.marcos.map(function (m) {
       return h('div', { class: 'marco' }, h('div', null, EL.etiqueta(m.instituicao), h('br'), h('span', { class: 'selo ' + (m.situacao === 'documentado' ? 'certo' : 'neutro'), style: 'margin-top:.4em', text: m.situacao === 'documentado' ? '✓ Documentado' : 'Previsto — aguarda evidência' })),
         h('div', null, h('p', { text: m.fato }), h('p', { class: 'porque', text: 'Por que importa: ' + m.importancia })));
