@@ -205,3 +205,11 @@ body.projecao { font-size: clamp(18px, 1.85vw, 40px); overflow: hidden; }
 .progresso.completo { color: var(--ok); border-top-color: var(--ok); }
 fieldset.faltando { outline: 3px solid var(--erro); outline-offset: 6px; border-radius: 8px; }
 fieldset.faltando legend::after { content: " — falta responder"; color: var(--erro); font-weight: 700; font-size: .85em; }
+
+/* Carta Dobro: botão ×2 em cada item */
+.linha-dobro { display: flex; justify-content: flex-end; margin-top: 6px; }
+.botao-dobro { appearance: none; font: inherit; font-weight: 700; font-size: .9rem; min-height: 44px; min-width: 64px; padding: 6px 14px; border: 2px dashed var(--tinta); border-radius: 999px; background: #fff; color: var(--tinta); cursor: pointer; }
+.botao-dobro.ativo { border-style: solid; background: var(--tinta); color: #fff; }
+.botao-dobro:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+.ordenar .mover .botao-dobro { flex: 0 0 auto; }
+.estado-dobro { font-weight: 650; margin: 4px 0 0; }
